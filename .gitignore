@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+.turbo
+.env
+.env.*
+coverage
+package-lock.json
+yarn.lock
+npm-debug.log*
+pnpm-debug.log*
