@@ -16,6 +16,7 @@
     "@orpc/openapi": "^1.14.2",
     "@orpc/server": "^1.14.2",
     "@orpc/zod": "^1.14.2",
+    "@scalar/express-api-reference": "^0.9.14",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pg": "^8.20.0",

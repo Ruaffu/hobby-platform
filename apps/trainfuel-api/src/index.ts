@@ -1,5 +1,6 @@
 import express from "express"
 import { AppDataSource } from "./db/data-source"
+import { docsRoutes } from "./modules/docs/routes/docs.routes"
 import { orpcHandler } from "./orpc/handler"
 
 const app = express()
@@ -12,6 +13,12 @@ app.get("/health", (_, res) => {
     service: "trainfuel-api"
   })
 })
+
+// Documentation routes.
+//
+// GET /openapi.json returns the generated OpenAPI document.
+// GET /reference shows the browser API docs.
+app.use(docsRoutes)
 
 app.use(async (req, res, next) => {
   const result = await orpcHandler.handle(req, res, {
@@ -38,6 +45,8 @@ const start = async () => {
 
   app.listen(4000, () => {
     console.log("TrainFuel API running on http://localhost:4000")
+    console.log("OpenAPI JSON available at http://localhost:4000/openapi.json")
+    console.log("API reference available at http://localhost:4000/reference")
   })
 }
 
