@@ -12,6 +12,8 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@hobby/contracts": "workspace:*",
+    "@tanstack/react-query": "^5.100.9",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
