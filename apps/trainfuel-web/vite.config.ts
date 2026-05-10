@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
-// https://vite.dev/config/
+// Vite plugins run during development/build.
+// react() enables React support.
+// tailwindcss() lets Vite understand @import "tailwindcss" in CSS.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()]
 })
