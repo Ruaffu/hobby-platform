@@ -1,0 +1,35 @@
+services:
+  trainfuel-postgres:
+    image: postgres:18
+    container_name: trainfuel-postgres
+    environment:
+      POSTGRES_USER: trainfuel
+      POSTGRES_PASSWORD: trainfuel
+      POSTGRES_DB: trainfuel
+    ports:
+      - "5432:5432"
+    volumes:
+      - trainfuel-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trainfuel -d trainfuel"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  trainfuel-flyway:
+    image: flyway/flyway:latest
+    container_name: trainfuel-flyway
+    depends_on:
+      trainfuel-postgres:
+        condition: service_healthy
+    command: >
+      -url=jdbc:postgresql://trainfuel-postgres:5432/trainfuel
+      -user=trainfuel
+      -password=trainfuel
+      -locations=filesystem:/flyway/sql
+      migrate
+    volumes:
+      - ../flyway/trainfuel/sql:/flyway/sql
+
+volumes:
+  trainfuel-postgres-data:

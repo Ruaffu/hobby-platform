@@ -1,5 +1,7 @@
+import { CreateFoodSchema } from "@hobby/contracts"
 import express from "express"
-import { CreateFoodSchema } from "../../../packages/contracts/src"
+import { AppDataSource } from "./db/data-source"
+import { FoodEntity } from "./modules/foods/entities/food.entity"
 
 const app = express()
 
@@ -12,22 +14,68 @@ app.get("/health", (_, res) => {
   })
 })
 
-app.post("/food", (req, res) => {
-    const result = CreateFoodSchema.safeParse(req.body)
+app.get("/foods", async (_, res) => {
+  const foodRepository = AppDataSource.getRepository(FoodEntity)
 
-    if(!result.success) {
-        return res.status(400).json({
-            error: "Invalid food",
-            details: result.error.issues
-        })
+  const foods = await foodRepository.find({
+    order: {
+      createdAt: "DESC"
     }
+  })
 
-    return res.status(201).json({
-        id: crypto.randomUUID(),
-        ...result.data
-    })
+  res.json(
+    foods.map((food) => ({
+      id: food.id,
+      name: food.name,
+      calories: food.calories,
+      protein: Number(food.protein),
+      carbs: Number(food.carbs),
+      fat: Number(food.fat)
+    }))
+  )
 })
 
-app.listen(4000, () => {
-  console.log("TrainFuel API running on http://localhost:4000")
+app.post("/foods", async (req, res) => {
+  const result = CreateFoodSchema.safeParse(req.body)
+
+  if (!result.success) {
+    return res.status(400).json({
+      error: "Invalid food",
+      issues: result.error.issues
+    })
+  }
+
+  const foodRepository = AppDataSource.getRepository(FoodEntity)
+
+  const food = foodRepository.create({
+    name: result.data.name,
+    calories: result.data.calories,
+    protein: String(result.data.protein),
+    carbs: String(result.data.carbs),
+    fat: String(result.data.fat)
+  })
+
+  const savedFood = await foodRepository.save(food)
+
+  return res.status(201).json({
+    id: savedFood.id,
+    name: savedFood.name,
+    calories: savedFood.calories,
+    protein: Number(savedFood.protein),
+    carbs: Number(savedFood.carbs),
+    fat: Number(savedFood.fat)
+  })
+})
+
+const start = async () => {
+  await AppDataSource.initialize()
+
+  app.listen(4000, () => {
+    console.log("TrainFuel API running on http://localhost:4000")
+  })
+}
+
+start().catch((error) => {
+  console.error("Failed to start API", error)
+  process.exit(1)
 })

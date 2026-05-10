@@ -9,3 +9,5 @@ package-lock.json
 yarn.lock
 npm-debug.log*
 pnpm-debug.log*
+.env
+.env.*
