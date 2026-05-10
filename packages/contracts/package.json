@@ -13,6 +13,8 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@orpc/openapi": "latest",
+    "@orpc/server": "latest",
     "zod": "latest"
   }
 }
