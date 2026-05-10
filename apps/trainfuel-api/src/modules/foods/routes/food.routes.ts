@@ -2,7 +2,15 @@ import { CreateFoodSchema } from "@hobby/contracts"
 import { Router } from "express"
 import { foodService } from "../services/food.service"
 
-// deprecated and no longer used, but keeping around for reference until we have the openapi spec fully implemented
+// Deprecated: this Express router is no longer mounted in the API.
+//
+// Foods are now exposed through oRPC procedures instead.
+// Keeping this file temporarily as a reference while the OpenAPI flow is being implemented.
+//
+// Safe to delete once:
+// - oRPC handles all food endpoints
+// - OpenAPI generation works
+// - the frontend uses the oRPC/OpenAPI-backed API path
 export const foodRoutes = Router()
 
 foodRoutes.get("/", async (_req, res) => {

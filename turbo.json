@@ -13,6 +13,9 @@
       "dependsOn": ["^build"]
     },
     "lint": {},
-    "typecheck": {}
+    "typecheck": {},
+    "generate:openapi": {
+      "outputs": ["openapi/**"]
+    }
   }
 }

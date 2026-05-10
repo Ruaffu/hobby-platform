@@ -1,0 +1,158 @@
+{
+  "info": {
+    "title": "TrainFuel API",
+    "version": "0.0.0",
+    "description": "API for TrainFuel, the meal planning and nutrition tracking app."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local development server"
+    }
+  ],
+  "openapi": "3.1.1",
+  "paths": {
+    "/foods": {
+      "get": {
+        "operationId": "foods.list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "calories": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "carbs": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "protein": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "fat": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "calories",
+                      "carbs",
+                      "protein",
+                      "fat"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "foods.create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "calories": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "carbs": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "protein": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "fat": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "name",
+                  "calories",
+                  "carbs",
+                  "protein",
+                  "fat"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "calories": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "carbs": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protein": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "fat": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "calories",
+                    "carbs",
+                    "protein",
+                    "fat"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
