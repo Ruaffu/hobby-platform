@@ -1,6 +1,6 @@
 import express from "express"
 import { AppDataSource } from "./db/data-source"
-import { foodRoutes } from "./modules/foods/routes/food.routes"
+import { orpcHandler } from "./orpc/handler"
 
 const app = express()
 
@@ -13,7 +13,25 @@ app.get("/health", (_, res) => {
   })
 })
 
-app.use("/foods", foodRoutes)
+app.use(async (req, res, next) => {
+  const result = await orpcHandler.handle(req, res, {
+    context: {
+      headers: req.headers
+    }
+  })
+
+  if (result.matched) {
+    return
+  }
+
+  next()
+})
+
+app.use((_req, res) => {
+  res.status(404).json({
+    error: "Not found"
+  })
+})
 
 const start = async () => {
   await AppDataSource.initialize()

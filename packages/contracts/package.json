@@ -15,6 +15,7 @@
   "dependencies": {
     "@orpc/openapi": "latest",
     "@orpc/server": "latest",
+    "@orpc/zod": "^1.14.2",
     "zod": "latest"
   }
 }

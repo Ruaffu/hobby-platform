@@ -2,6 +2,7 @@ import { CreateFoodSchema } from "@hobby/contracts"
 import { Router } from "express"
 import { foodService } from "../services/food.service"
 
+// deprecated and no longer used, but keeping around for reference until we have the openapi spec fully implemented
 export const foodRoutes = Router()
 
 foodRoutes.get("/", async (_req, res) => {

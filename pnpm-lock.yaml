@@ -35,6 +35,9 @@ importers:
       '@orpc/server':
         specifier: ^1.14.2
         version: 1.14.2
+      '@orpc/zod':
+        specifier: ^1.14.2
+        version: 1.14.2(@orpc/contract@1.14.2)(@orpc/server@1.14.2)(zod@4.4.3)
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -124,6 +127,9 @@ importers:
       '@orpc/server':
         specifier: latest
         version: 1.14.2
+      '@orpc/zod':
+        specifier: ^1.14.2
+        version: 1.14.2(@orpc/contract@1.14.2)(@orpc/server@1.14.2)(zod@4.4.3)
       zod:
         specifier: latest
         version: 4.4.3
@@ -513,6 +519,9 @@ packages:
   '@orpc/interop@1.14.2':
     resolution: {integrity: sha512-FkrXlR0vmhx5D0t5WA6YN7XyC1WwjGGmkaaShVUGdnFu6m0bl4v3vZZWIMcPy5fG/6wF7KCTEGx0B6+kMmLWiQ==}
 
+  '@orpc/json-schema@1.14.2':
+    resolution: {integrity: sha512-CpK8+evqU1j685f5M2UUO+tsm0HFKeykTQNTtq0WGMyFy7PPVOGYbJxZSorLJmWDfEw8ImPP2bj3wXEEOJsgag==}
+
   '@orpc/openapi-client@1.14.2':
     resolution: {integrity: sha512-KIXSVuGYh3JvO0lxUUztuMkEj6FV5C96QivR+H/HvqfFidC3hEH0nqi0vEWmUzlbzH3jbCaJV8KKV41HKnUNYw==}
 
@@ -560,6 +569,13 @@ packages:
 
   '@orpc/standard-server@1.14.2':
     resolution: {integrity: sha512-XHySJICwDsJf211gcxtJBpzB1ldZrSHDW2mqbBQg+I2AewvTqWiqeGZV+SPvmq87q4IfBzncSuwMrRKplUJhsw==}
+
+  '@orpc/zod@1.14.2':
+    resolution: {integrity: sha512-47FBoaAz5GfHSdtD/ZNmTjorLD9SiD+I008UH2+DKehC4HMh8V1SbsMWCanUOkh1IFPZ1kzKaOOT+g0OAIOUWA==}
+    peerDependencies:
+      '@orpc/contract': 1.14.2
+      '@orpc/server': 1.14.2
+      zod: '>=3.25.0'
 
   '@oxc-project/types@0.128.0':
     resolution: {integrity: sha512-huv1Y/LzBJkBVHt3OlC7u0zHBW9qXf1FdD7sGmc1rXc2P1mTwHssYv7jyGx5KAACSCH+9B3Bhn6Z9luHRvf7pQ==}
@@ -1111,6 +1127,10 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  escape-string-regexp@5.0.0:
+    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
+    engines: {node: '>=12'}
 
   eslint-plugin-react-hooks@7.1.1:
     resolution: {integrity: sha512-f2I7Gw6JbvCexzIInuSbZpfdQ44D7iqdWX01FKLvrPgqxoE7oMj8clOfto8U6vYiz4yd5oKu39rRSVOe1zRu0g==}
@@ -2067,6 +2087,9 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
+  wildcard-match@5.1.4:
+    resolution: {integrity: sha512-wldeCaczs8XXq7hj+5d/F38JE2r7EXgb6WQDM84RVwxy81T/sxB5e9+uZLK9Q9oNz1mlvjut+QtvgaOQFPVq/g==}
+
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
@@ -2450,6 +2473,20 @@ snapshots:
 
   '@orpc/interop@1.14.2': {}
 
+  '@orpc/json-schema@1.14.2':
+    dependencies:
+      '@orpc/contract': 1.14.2
+      '@orpc/interop': 1.14.2
+      '@orpc/openapi': 1.14.2
+      '@orpc/server': 1.14.2
+      '@orpc/shared': 1.14.2
+      json-schema-typed: 8.0.2
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - crossws
+      - fastify
+      - ws
+
   '@orpc/openapi-client@1.14.2':
     dependencies:
       '@orpc/client': 1.14.2
@@ -2542,6 +2579,22 @@ snapshots:
       '@orpc/shared': 1.14.2
     transitivePeerDependencies:
       - '@opentelemetry/api'
+
+  '@orpc/zod@1.14.2(@orpc/contract@1.14.2)(@orpc/server@1.14.2)(zod@4.4.3)':
+    dependencies:
+      '@orpc/contract': 1.14.2
+      '@orpc/json-schema': 1.14.2
+      '@orpc/openapi': 1.14.2
+      '@orpc/server': 1.14.2
+      '@orpc/shared': 1.14.2
+      escape-string-regexp: 5.0.0
+      wildcard-match: 5.1.4
+      zod: 4.4.3
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - crossws
+      - fastify
+      - ws
 
   '@oxc-project/types@0.128.0': {}
 
@@ -3059,6 +3112,8 @@ snapshots:
   escape-html@1.0.3: {}
 
   escape-string-regexp@4.0.0: {}
+
+  escape-string-regexp@5.0.0: {}
 
   eslint-plugin-react-hooks@7.1.1(eslint@10.3.0):
     dependencies:
@@ -3953,6 +4008,8 @@ snapshots:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
+
+  wildcard-match@5.1.4: {}
 
   word-wrap@1.2.5: {}
 
