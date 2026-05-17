@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFood, deleteFood, getFoods } from "../api/foods"
 
 // Query keys should be centralized.
@@ -15,11 +15,16 @@ export const foodQueryKeys = {
   all: ["foods"] as const
 }
 
+export const foodQueries = {
+  list: () =>
+    queryOptions({
+      queryKey: foodQueryKeys.all,
+      queryFn: getFoods
+    })
+}
+
 export const useFoods = () => {
-  return useQuery({
-    queryKey: foodQueryKeys.all,
-    queryFn: getFoods
-  })
+  return useQuery(foodQueries.list())
 }
 
 export const useCreateFood = () => {
