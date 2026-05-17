@@ -1,3 +1,4 @@
+import type { Food } from "@hobby/contracts"
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFood, deleteFood, getFoods } from "../api/foods"
 
@@ -51,10 +52,38 @@ export const useDeleteFood = () => {
   return useMutation({
     mutationFn: deleteFood,
 
-    onSuccess: async () => {
-      // Deleting a food changes the foods list.
-      // So we mark ["foods"] as stale and let TanStack Query refetch it.
-      await queryClient.invalidateQueries({
+    onMutate: async (foodId) => {
+      await queryClient.cancelQueries({
+        queryKey: foodQueryKeys.all
+      })
+
+      const previousFoods = queryClient.getQueryData<Food[]>(foodQueryKeys.all)
+
+      queryClient.setQueryData<Food[]>(foodQueryKeys.all, (currentFoods) => {
+        if (!currentFoods) {
+          return currentFoods
+        }
+
+        return currentFoods.filter((food) => food.id !== foodId)
+      })
+
+      return {
+        previousFoods
+      }
+    },
+
+    onError: (_error, _foodId, context) => {
+      if (context?.previousFoods) {
+        queryClient.setQueryData(foodQueryKeys.all, context.previousFoods)
+      }
+    },
+
+    onSettled: () => {
+      // Do not await this.
+      //
+      // If the API is down, the refetch can fail/retry.
+      // Awaiting it would keep the mutation pending longer than needed.
+      void queryClient.invalidateQueries({
         queryKey: foodQueryKeys.all
       })
     }
