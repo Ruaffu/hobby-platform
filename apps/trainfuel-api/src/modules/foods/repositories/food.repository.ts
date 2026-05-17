@@ -1,4 +1,4 @@
-import type { CreateFood } from "@hobby/contracts"
+import type { CreateFood, UpdateFood } from "@hobby/contracts"
 import { AppDataSource } from "../../../db/data-source"
 import { FoodEntity } from "../entities/food.entity"
 
@@ -37,5 +37,39 @@ export const foodRepository = {
     await repository.delete({ id })
 
     return food
+  },
+
+  async update(input: UpdateFood) {
+    const food = await repository.findOne({
+      where: {
+        id: input.id
+      }
+    })
+
+    if (!food) {
+      return null
+    }
+
+    if (input.name !== undefined) {
+      food.name = input.name
+    }
+
+    if (input.calories !== undefined) {
+      food.calories = input.calories
+    }
+
+    if (input.protein !== undefined) {
+      food.protein = String(input.protein)
+    }
+
+    if (input.carbs !== undefined) {
+      food.carbs = String(input.carbs)
+    }
+
+    if (input.fat !== undefined) {
+      food.fat = String(input.fat)
+    }
+
+    return repository.save(food)
   }
 }

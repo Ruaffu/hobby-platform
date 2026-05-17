@@ -22,6 +22,10 @@ export const router = {
 
     delete: foodProcedures.delete.handler(async ({ input }) => {
       return foodService.deleteFood(input.id)
+    }),
+
+    update: foodProcedures.update.handler(async ({ input }) => {
+      return foodService.updateFood(input)
     })
   }
 }

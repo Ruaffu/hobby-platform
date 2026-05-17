@@ -28,7 +28,11 @@ export const FoodListSchema = z.array(FoodSchema)
 // CreateFoodSchema describes what the client sends when creating food.
 // It does not include id because the database generates it.
 export const CreateFoodSchema = FoodSchema.omit({ id: true })
+export const UpdateFoodSchema = CreateFoodSchema.partial().extend({
+  id: z.uuid()
+})
 
 export type Food = z.infer<typeof FoodSchema>
 export type CreateFood = z.infer<typeof CreateFoodSchema>
 export type DeleteFood = z.infer<typeof DeleteFoodSchema>
+export type UpdateFood = z.infer<typeof UpdateFoodSchema>

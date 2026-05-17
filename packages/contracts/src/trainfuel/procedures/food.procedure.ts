@@ -1,5 +1,11 @@
 import { os } from "@orpc/server"
-import { CreateFoodSchema, DeleteFoodSchema, FoodListSchema, FoodSchema } from "../food"
+import {
+  CreateFoodSchema,
+  DeleteFoodSchema,
+  FoodListSchema,
+  FoodSchema,
+  UpdateFoodSchema
+} from "../food"
 
 // This file defines the public contract for food-related API procedures.
 //
@@ -27,6 +33,14 @@ export const foodProcedures = {
     // The request body must match CreateFoodSchema.
     .input(CreateFoodSchema)
     // The response must match FoodSchema.
+    .output(FoodSchema),
+
+  update: os
+    .route({
+      method: "PATCH",
+      path: "/foods/{id}"
+    })
+    .input(UpdateFoodSchema)
     .output(FoodSchema),
 
   delete: os

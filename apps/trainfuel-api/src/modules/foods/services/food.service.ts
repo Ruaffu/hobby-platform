@@ -1,4 +1,4 @@
-import type { CreateFood, Food } from "@hobby/contracts"
+import type { CreateFood, Food, UpdateFood } from "@hobby/contracts"
 import type { FoodEntity } from "../entities/food.entity"
 import { foodRepository } from "../repositories/food.repository"
 
@@ -33,5 +33,15 @@ export const foodService = {
     }
 
     return toFood(deletedFood)
+  },
+
+  async updateFood(input: UpdateFood) {
+    const updateFood = await foodRepository.update(input)
+
+    if (!updateFood) {
+      throw new Error("Food not found")
+    }
+
+    return toFood(updateFood)
   }
 }
