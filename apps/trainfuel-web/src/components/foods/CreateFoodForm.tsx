@@ -1,6 +1,7 @@
-import { Button, Card, FieldError, Form, Input, Label, TextField } from "@heroui/react"
+import { Button, Card, Form } from "@heroui/react"
 import type { ComponentProps } from "react"
 import { useCreateFood } from "../../queries/foodQueries"
+import { FoodFormField } from "./FoodFormField"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
 
@@ -48,36 +49,51 @@ export const CreateFoodForm = () => {
 
       <Card.Content>
         <Form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <TextField isRequired name="name">
-            <Label>Name</Label>
-            <Input placeholder="Chicken breast" />
-            <FieldError />
-          </TextField>
+          <FoodFormField isRequired label="Name" name="name" placeholder="Chicken breast" />
 
-          <TextField isRequired name="calories" type="number">
-            <Label>Calories</Label>
-            <Input placeholder="120" />
-            <FieldError />
-          </TextField>
+          <FoodFormField
+            isRequired
+            inputProps={{
+              type: "number"
+            }}
+            label="Calories"
+            name="calories"
+            placeholder="120"
+          />
 
           <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-            <TextField isRequired name="protein" type="number">
-              <Label>Protein</Label>
-              <Input placeholder="23" step="0.1" />
-              <FieldError />
-            </TextField>
+            <FoodFormField
+              isRequired
+              inputProps={{
+                step: "0.1",
+                type: "number"
+              }}
+              label="Protein"
+              name="protein"
+              placeholder="23"
+            />
 
-            <TextField isRequired name="carbs" type="number">
-              <Label>Carbs</Label>
-              <Input placeholder="0" step="0.1" />
-              <FieldError />
-            </TextField>
+            <FoodFormField
+              isRequired
+              inputProps={{
+                step: "0.1",
+                type: "number"
+              }}
+              label="Carbs"
+              name="carbs"
+              placeholder="0"
+            />
 
-            <TextField isRequired name="fat" type="number">
-              <Label>Fat</Label>
-              <Input placeholder="2" step="0.1" />
-              <FieldError />
-            </TextField>
+            <FoodFormField
+              isRequired
+              inputProps={{
+                step: "0.1",
+                type: "number"
+              }}
+              label="Fat"
+              name="fat"
+              placeholder="2"
+            />
           </div>
 
           <Button
