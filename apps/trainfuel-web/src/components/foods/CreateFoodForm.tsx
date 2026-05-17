@@ -111,7 +111,9 @@ export const CreateFoodForm = () => {
           ) : null}
 
           {createFoodMutation.isError ? (
-            <Card.Description className="text-danger">Could not create food.</Card.Description>
+            <Card.Description className="text-danger">
+              {createFoodMutation.error.message}
+            </Card.Description>
           ) : null}
         </Form>
       </Card.Content>

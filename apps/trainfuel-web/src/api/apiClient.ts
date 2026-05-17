@@ -5,13 +5,30 @@ type ApiRequestOptions = {
   body?: unknown
 }
 
-// Small wrapper around fetch.
-//
-// Why?
-// - Keeps API base URL in one place.
-// - Avoids repeating response.ok checks everywhere.
-// - Automatically JSON-stringifies request bodies.
-// - Automatically parses JSON responses.
+type ApiErrorBody = {
+  error?: string
+  message?: string
+}
+
+export class ApiError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = "ApiError"
+    this.status = status
+  }
+}
+
+const readErrorMessage = async (response: Response) => {
+  try {
+    const body = (await response.json()) as ApiErrorBody
+    return body.message ?? body.error ?? `Api request failed: ${response.status}`
+  } catch {
+    return `API request failed: ${response.status}`
+  }
+}
+
 export const apiRequest = async <TResponse>(
   path: string,
   options: ApiRequestOptions = {}
@@ -25,7 +42,8 @@ export const apiRequest = async <TResponse>(
   })
 
   if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`)
+    const message = await readErrorMessage(response)
+    throw new ApiError(message, response.status)
   }
 
   return response.json() as Promise<TResponse>

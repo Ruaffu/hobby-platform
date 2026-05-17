@@ -29,9 +29,10 @@ export const DeleteFoodDialog = ({ food, isOpen, onOpenChange }: DeleteFoodDialo
             </AlertDialog.Header>
 
             <AlertDialog.Body>
-              <AlertDialog.Body>
-                This will permanently delete {food.name}. This action cannot be undone.
-              </AlertDialog.Body>
+              This will permanently delete {food.name}. This action cannot be undone.
+              {deleteFoodMutation.isError ? (
+                <span className="text-danger">{deleteFoodMutation.error.message}</span>
+              ) : null}
             </AlertDialog.Body>
 
             <AlertDialog.Footer>
