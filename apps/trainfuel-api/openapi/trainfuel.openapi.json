@@ -313,6 +313,215 @@
           }
         }
       }
+    },
+    "/meal-entries": {
+      "get": {
+        "operationId": "meals.list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "food": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "calories": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "protein": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "carbs": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "fat": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "calories",
+                          "protein",
+                          "carbs",
+                          "fat"
+                        ]
+                      },
+                      "mealType": {
+                        "enum": [
+                          "breakfast",
+                          "lunch",
+                          "dinner",
+                          "snack"
+                        ],
+                        "type": "string"
+                      },
+                      "quantityGrams": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "loggedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "food",
+                      "mealType",
+                      "quantityGrams",
+                      "loggedAt"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "meals.create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "foodId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "mealType": {
+                    "enum": [
+                      "breakfast",
+                      "lunch",
+                      "dinner",
+                      "snack"
+                    ],
+                    "type": "string"
+                  },
+                  "quantityGrams": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "loggedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "foodId",
+                  "mealType",
+                  "quantityGrams"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "food": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "calories": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "protein": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "carbs": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "fat": {
+                          "type": "number",
+                          "minimum": 0
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "calories",
+                        "protein",
+                        "carbs",
+                        "fat"
+                      ]
+                    },
+                    "mealType": {
+                      "enum": [
+                        "breakfast",
+                        "lunch",
+                        "dinner",
+                        "snack"
+                      ],
+                      "type": "string"
+                    },
+                    "quantityGrams": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "loggedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "food",
+                    "mealType",
+                    "quantityGrams",
+                    "loggedAt"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
