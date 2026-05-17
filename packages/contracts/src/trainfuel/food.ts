@@ -14,6 +14,14 @@ export const FoodSchema = z.object({
   fat: z.number().nonnegative("Fat cannot be negative")
 })
 
+export const DeleteFoodSchema = z.object({
+  // The id comes from the URL path:
+  // DELETE /foods/{id}
+  //
+  // Since our food IDs are UUIDs, we validate that here.
+  id: z.uuid()
+})
+
 // FoodListSchema is used for endpoints that return multiple foods.
 export const FoodListSchema = z.array(FoodSchema)
 
@@ -23,3 +31,4 @@ export const CreateFoodSchema = FoodSchema.omit({ id: true })
 
 export type Food = z.infer<typeof FoodSchema>
 export type CreateFood = z.infer<typeof CreateFoodSchema>
+export type DeleteFood = z.infer<typeof DeleteFoodSchema>

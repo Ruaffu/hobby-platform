@@ -18,6 +18,10 @@ export const router = {
 
     create: foodProcedures.create.handler(async ({ input }) => {
       return foodService.createFood(input)
+    }),
+
+    delete: foodProcedures.delete.handler(async ({ input }) => {
+      return foodService.deleteFood(input.id)
     })
   }
 }

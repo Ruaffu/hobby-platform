@@ -23,5 +23,15 @@ export const foodService = {
   async createFood(input: CreateFood) {
     const createdFood = await foodRepository.create(input)
     return toFood(createdFood)
+  },
+
+  async deleteFood(id: string) {
+    const deletedFood = await foodRepository.deleteById(id)
+
+    if (!deletedFood) {
+      throw new Error("Food not found!")
+    }
+
+    return toFood(deletedFood)
   }
 }

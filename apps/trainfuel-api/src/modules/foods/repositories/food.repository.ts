@@ -22,5 +22,20 @@ export const foodRepository = {
       fat: String(input.fat)
     })
     return repository.save(food)
+  },
+
+  async deleteById(id: string) {
+    const food = await repository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!food) {
+      return null
+    }
+    await repository.delete({ id })
+
+    return food
   }
 }

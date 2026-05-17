@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFood, getFoods } from "../api/foods"
+import { createFood, deleteFood, getFoods } from "../api/foods"
 
 // Query keys should be centralized.
 //
@@ -33,6 +33,22 @@ export const useCreateFood = () => {
       //
       // invalidateQueries tells TanStack Query:
       // "Mark this query as stale and refetch it if it is currently used."
+      await queryClient.invalidateQueries({
+        queryKey: foodQueryKeys.all
+      })
+    }
+  })
+}
+
+export const useDeleteFood = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: deleteFood,
+
+    onSuccess: async () => {
+      // Deleting a food changes the foods list.
+      // So we mark ["foods"] as stale and let TanStack Query refetch it.
       await queryClient.invalidateQueries({
         queryKey: foodQueryKeys.all
       })

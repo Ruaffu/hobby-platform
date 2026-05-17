@@ -32,3 +32,17 @@ export const createFood = async (input: CreateFood): Promise<Food> => {
 
   return FoodSchema.parse(data)
 }
+
+export const deleteFood = async (id: string): Promise<Food> => {
+  const response = await fetch(`${env.apiBaseUrl}/foods/${id}`, {
+    method: "DELETE"
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to delete")
+  }
+
+  const data = await response.json()
+
+  return FoodSchema.parse(data)
+}
