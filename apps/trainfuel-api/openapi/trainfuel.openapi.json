@@ -34,14 +34,15 @@
                         "minLength": 1
                       },
                       "calories": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "protein": {
                         "type": "number",
                         "minimum": 0
                       },
                       "carbs": {
-                        "type": "number",
-                        "minimum": 0
-                      },
-                      "protein": {
                         "type": "number",
                         "minimum": 0
                       },
@@ -54,8 +55,8 @@
                       "id",
                       "name",
                       "calories",
-                      "carbs",
                       "protein",
+                      "carbs",
                       "fat"
                     ]
                   }
@@ -79,14 +80,15 @@
                     "minLength": 1
                   },
                   "calories": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "protein": {
                     "type": "number",
                     "minimum": 0
                   },
                   "carbs": {
-                    "type": "number",
-                    "minimum": 0
-                  },
-                  "protein": {
                     "type": "number",
                     "minimum": 0
                   },
@@ -98,8 +100,8 @@
                 "required": [
                   "name",
                   "calories",
-                  "carbs",
                   "protein",
+                  "carbs",
                   "fat"
                 ]
               }
@@ -123,14 +125,15 @@
                       "minLength": 1
                     },
                     "calories": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "protein": {
                       "type": "number",
                       "minimum": 0
                     },
                     "carbs": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "protein": {
                       "type": "number",
                       "minimum": 0
                     },
@@ -143,8 +146,8 @@
                     "id",
                     "name",
                     "calories",
-                    "carbs",
                     "protein",
+                    "carbs",
                     "fat"
                   ]
                 }

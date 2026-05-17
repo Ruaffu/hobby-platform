@@ -4,11 +4,14 @@ import { z } from "zod"
 // It includes the generated id.
 export const FoodSchema = z.object({
   id: z.uuid(),
-  name: z.string().min(1),
-  calories: z.number().nonnegative(),
-  carbs: z.number().nonnegative(),
-  protein: z.number().nonnegative(),
-  fat: z.number().nonnegative()
+  name: z.string().min(1, "Food name is required"),
+  calories: z
+    .number()
+    .int("Calories must be a whole number")
+    .nonnegative("Calories cannot be negative"),
+  protein: z.number().nonnegative("Protein cannot be negative"),
+  carbs: z.number().nonnegative("Carbs cannot be negative"),
+  fat: z.number().nonnegative("Fat cannot be negative")
 })
 
 // FoodListSchema is used for endpoints that return multiple foods.

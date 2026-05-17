@@ -1,22 +1,19 @@
 import { Button, Card, Form } from "@heroui/react"
-import type { ComponentProps } from "react"
+import { type ComponentProps, useState } from "react"
+import { ZodError } from "zod"
 import { useCreateFood } from "../../queries/foodQueries"
 import { FoodFormField } from "./FoodFormField"
+import { parseFoodForm } from "./parseFoodForm"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
 
-const getRequiredString = (formData: FormData, key: string) => {
-  const value = formData.get(key)
-
-  if (typeof value !== "string") {
-    throw new Error(`Missing form field: ${key}`)
-  }
-
-  return value
-}
-
 export const CreateFoodForm = () => {
   const createFoodMutation = useCreateFood()
+
+  // This stores a simple form-level validation message.
+  //
+  // Later we can improve this to field-level errors.
+  const [validationError, setValidationError] = useState<string | null>(null)
 
   const handleSubmit: FormSubmitHandler = (event) => {
     event.preventDefault()
@@ -24,20 +21,25 @@ export const CreateFoodForm = () => {
     const formElement = event.currentTarget
     const formData = new FormData(formElement)
 
-    createFoodMutation.mutate(
-      {
-        name: getRequiredString(formData, "name"),
-        calories: Number(getRequiredString(formData, "calories")),
-        protein: Number(getRequiredString(formData, "protein")),
-        carbs: Number(getRequiredString(formData, "carbs")),
-        fat: Number(getRequiredString(formData, "fat"))
-      },
-      {
+    try {
+      const input = parseFoodForm(formData)
+
+      setValidationError(null)
+      createFoodMutation.mutate(input, {
         onSuccess: () => {
           formElement.reset()
         }
+      })
+    } catch (error) {
+      if (error instanceof ZodError) {
+        // For now we show only the first validation issue.
+        //
+        // This keeps the UI simple while still teaching the validation flow.
+        setValidationError(error.issues[0]?.message ?? "Invalid food input")
+        return
       }
-    )
+      setValidationError("Invalid food input")
+    }
   }
 
   return (
@@ -104,9 +106,13 @@ export const CreateFoodForm = () => {
             {createFoodMutation.isPending ? "Adding food..." : "Add food"}
           </Button>
 
-          {createFoodMutation.isError && (
-            <span className="text-sm text-danger">Could not create food.</span>
-          )}
+          {validationError ? (
+            <Card.Description className="text-danger">{validationError}</Card.Description>
+          ) : null}
+
+          {createFoodMutation.isError ? (
+            <Card.Description className="text-danger">Could not create food.</Card.Description>
+          ) : null}
         </Form>
       </Card.Content>
     </Card>
