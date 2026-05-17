@@ -1,5 +1,6 @@
 import { Card } from "@heroui/react"
 import type { Food } from "@hobby/contracts"
+import { FoodCard } from "./FoodCard"
 
 type FoodListProps = {
   foods: Food[]
@@ -13,14 +14,7 @@ export const FoodList = ({ foods }: FoodListProps) => {
   return (
     <Card.Content className="grid gap-3 p-0">
       {foods.map((food) => (
-        <Card key={food.id} className="p-4">
-          <Card.Content>
-            <Card.Title>{food.name}</Card.Title>
-            <Card.Description>
-              {food.calories} kcal · {food.protein}g protein · {food.carbs}g carbs · {food.fat}g fat
-            </Card.Description>
-          </Card.Content>
-        </Card>
+        <FoodCard key={food.id} food={food} />
       ))}
     </Card.Content>
   )
