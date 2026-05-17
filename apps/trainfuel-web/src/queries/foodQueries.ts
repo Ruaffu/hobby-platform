@@ -1,6 +1,6 @@
 import type { Food } from "@hobby/contracts"
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFood, deleteFood, getFoods } from "../api/foods"
+import { createFood, deleteFood, getFoods, updateFood } from "../api/foods"
 
 // Query keys should be centralized.
 //
@@ -84,6 +84,22 @@ export const useDeleteFood = () => {
       // If the API is down, the refetch can fail/retry.
       // Awaiting it would keep the mutation pending longer than needed.
       void queryClient.invalidateQueries({
+        queryKey: foodQueryKeys.all
+      })
+    }
+  })
+}
+
+export const useUpdateFood = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: updateFood,
+
+    onSuccess: async () => {
+      // Updating a food changes the foods list.
+      // Refetch the list so the UI shows the saved values.
+      await queryClient.invalidateQueries({
         queryKey: foodQueryKeys.all
       })
     }

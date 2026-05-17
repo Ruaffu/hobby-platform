@@ -1,4 +1,11 @@
-import { type CreateFood, CreateFoodSchema, type Food, FoodSchema } from "@hobby/contracts"
+import {
+  type CreateFood,
+  CreateFoodSchema,
+  type Food,
+  FoodSchema,
+  type UpdateFood,
+  UpdateFoodSchema
+} from "@hobby/contracts"
 import { apiRequest } from "./apiClient"
 
 export const getFoods = async (): Promise<Food[]> => {
@@ -21,6 +28,17 @@ export const createFood = async (input: CreateFood): Promise<Food> => {
 export const deleteFood = async (id: string): Promise<Food> => {
   const data = await apiRequest<unknown>(`/foods/${id}`, {
     method: "DELETE"
+  })
+
+  return FoodSchema.parse(data)
+}
+
+export const updateFood = async (input: UpdateFood): Promise<Food> => {
+  const body = UpdateFoodSchema.parse(input)
+
+  const data = await apiRequest<unknown>(`/foods/${body.id}`, {
+    method: "PATCH",
+    body
   })
 
   return FoodSchema.parse(data)
