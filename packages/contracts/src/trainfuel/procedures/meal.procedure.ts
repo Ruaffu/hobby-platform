@@ -3,7 +3,8 @@ import {
   CreateMealEntrySchema,
   DeleteMealEntrySchema,
   MealEntryListSchema,
-  MealEntrySchema
+  MealEntrySchema,
+  UpdateMealEntrySchema
 } from "../meal/mealEntry"
 
 export const mealProcedures = {
@@ -28,5 +29,13 @@ export const mealProcedures = {
       path: "/meal-entries/{id}"
     })
     .input(DeleteMealEntrySchema)
+    .output(MealEntrySchema),
+
+  update: os
+    .route({
+      method: "PATCH",
+      path: "/meal-entries/{id}"
+    })
+    .input(UpdateMealEntrySchema)
     .output(MealEntrySchema)
 }

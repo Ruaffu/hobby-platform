@@ -1,6 +1,11 @@
 import type { MealEntry } from "@hobby/contracts"
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createMealEntry, deleteMealEntry, getMealEntries } from "../api/mealEntries"
+import {
+  createMealEntry,
+  deleteMealEntry,
+  getMealEntries,
+  updateMealEntry
+} from "../api/mealEntries"
 
 export const mealEntryQueryKeys = {
   all: ["mealEntries"] as const
@@ -66,6 +71,20 @@ export const useDeleteMealEntry = () => {
 
     onSettled: () => {
       void queryClient.invalidateQueries({
+        queryKey: mealEntryQueryKeys.all
+      })
+    }
+  })
+}
+
+export const useUpdateMealEntry = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: updateMealEntry,
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: mealEntryQueryKeys.all
       })
     }

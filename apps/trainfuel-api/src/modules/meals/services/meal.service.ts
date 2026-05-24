@@ -1,4 +1,4 @@
-import type { CreateMealEntry, MealEntry } from "@hobby/contracts"
+import type { CreateMealEntry, MealEntry, UpdateMealEntry } from "@hobby/contracts"
 import type { MealEntryEntity } from "../entities/meal-entry.entity"
 import { mealRepository } from "../repositories/meal.repository"
 
@@ -44,5 +44,15 @@ export const mealService = {
     }
 
     return toMealEntry(deletedMealEntry)
+  },
+
+  async updateMealEntry(input: UpdateMealEntry) {
+    const updatedMealEntry = await mealRepository.update(input)
+
+    if (!updatedMealEntry) {
+      throw new Error("Meal entry could not be updated")
+    }
+
+    return toMealEntry(updatedMealEntry)
   }
 }

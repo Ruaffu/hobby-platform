@@ -24,7 +24,12 @@ export const DeleteMealEntrySchema = z.object({
   id: z.uuid()
 })
 
+export const UpdateMealEntrySchema = CreateMealEntrySchema.partial().extend({
+  id: z.uuid()
+})
+
 export type MealType = z.infer<typeof MealTypeSchema>
 export type MealEntry = z.infer<typeof MealEntrySchema>
 export type CreateMealEntry = z.infer<typeof CreateMealEntrySchema>
 export type DeleteMealEntry = z.infer<typeof DeleteMealEntrySchema>
+export type UpdateMealEntry = z.infer<typeof UpdateMealEntrySchema>

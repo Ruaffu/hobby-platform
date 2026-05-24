@@ -2,7 +2,9 @@ import {
   type CreateMealEntry,
   CreateMealEntrySchema,
   type MealEntry,
-  MealEntrySchema
+  MealEntrySchema,
+  type UpdateMealEntry,
+  UpdateMealEntrySchema
 } from "@hobby/contracts"
 import { apiRequest } from "./apiClient"
 
@@ -25,6 +27,17 @@ export const createMealEntry = async (input: CreateMealEntry): Promise<MealEntry
 export const deleteMealEntry = async (id: string): Promise<MealEntry> => {
   const data = await apiRequest<unknown>(`/meal-entries/${id}`, {
     method: "DELETE"
+  })
+
+  return MealEntrySchema.parse(data)
+}
+
+export const updateMealEntry = async (input: UpdateMealEntry): Promise<MealEntry> => {
+  const body = UpdateMealEntrySchema.parse(input)
+
+  const data = await apiRequest<unknown>(`/meal-entries/${body.id}`, {
+    method: "PATCH",
+    body
   })
 
   return MealEntrySchema.parse(data)
