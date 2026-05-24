@@ -3,6 +3,7 @@ import { FoodList } from "./components/foods/FoodList"
 import { Page, PageHeader, SectionCard } from "./components/layout/Page"
 import { StatusText } from "./components/layout/StatusText"
 import { CreateMealEntryForm } from "./components/meals/CreateMealEntryForm"
+import { DailyTotalsCard } from "./components/meals/DailyTotalsCard"
 import { MealEntryList } from "./components/meals/MealEntryList"
 import { useFoods } from "./queries/foodQueries"
 import { useMealEntries } from "./queries/mealEntryQueries"
@@ -21,6 +22,8 @@ function App() {
       <CreateFoodForm />
 
       {foodsQuery.isSuccess ? <CreateMealEntryForm foods={foodsQuery.data} /> : null}
+
+      {mealEntriesQuery.isSuccess ? <DailyTotalsCard mealEntries={mealEntriesQuery.data} /> : null}
 
       <SectionCard title="Foods" description="Your reusable food items.">
         {foodsQuery.isLoading ? <StatusText>Loading foods...</StatusText> : null}
