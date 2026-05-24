@@ -19,3 +19,9 @@ export const filterMealEntriesForDate = (mealEntries: MealEntry[], date: Date): 
 export const filterMealEntriesForToday = (mealEntries: MealEntry[]): MealEntry[] => {
   return filterMealEntriesForDate(mealEntries, new Date())
 }
+
+export const toLocalNoonIsoString = (date: Date) => {
+  const localNoon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0)
+
+  return localNoon.toISOString()
+}

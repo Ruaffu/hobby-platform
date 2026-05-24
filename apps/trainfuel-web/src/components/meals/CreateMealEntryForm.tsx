@@ -12,12 +12,14 @@ import {
 import type { Food, MealType } from "@hobby/contracts"
 import { type ComponentProps, useState } from "react"
 import { ZodError } from "zod"
+import { toLocalNoonIsoString } from "../../features/dates/dateFilters"
 import { useCreateMealEntry } from "../../queries/mealEntryQueries"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
 
 type CreateMealEntryFormProps = {
   foods: Food[]
+  selectedDate: Date
 }
 
 const mealTypes: Array<{
@@ -60,7 +62,7 @@ const toNumber = (value: string) => {
   return Number(value)
 }
 
-export const CreateMealEntryForm = ({ foods }: CreateMealEntryFormProps) => {
+export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryFormProps) => {
   const createMealEntryMutation = useCreateMealEntry()
   const [validationError, setValidationError] = useState<string | null>(null)
 
@@ -74,7 +76,8 @@ export const CreateMealEntryForm = ({ foods }: CreateMealEntryFormProps) => {
       const input = {
         foodId: getRequiredString(formData, "foodId"),
         mealType: getRequiredString(formData, "mealType") as MealType,
-        quantityGrams: toNumber(getRequiredString(formData, "quantityGrams"))
+        quantityGrams: toNumber(getRequiredString(formData, "quantityGrams")),
+        loggedAt: toLocalNoonIsoString(selectedDate)
       }
 
       setValidationError(null)
@@ -103,7 +106,9 @@ export const CreateMealEntryForm = ({ foods }: CreateMealEntryFormProps) => {
     <Card className="max-w-xl">
       <Card.Header>
         <Card.Title>Log meal</Card.Title>
-        <Card.Description>Choose a food and log how many grams you ate.</Card.Description>
+        <Card.Description>
+          Choose a food and log how many grams you ate for the selected date.
+        </Card.Description>
       </Card.Header>
 
       <Card.Content>

@@ -33,7 +33,9 @@ function App() {
 
       <CreateFoodForm />
 
-      {foodsQuery.isSuccess ? <CreateMealEntryForm foods={foodsQuery.data} /> : null}
+      {foodsQuery.isSuccess ? (
+        <CreateMealEntryForm foods={foodsQuery.data} selectedDate={selectedDate} />
+      ) : null}
 
       {mealEntriesQuery.isSuccess ? (
         <DailyTotalsCard mealEntries={selectedDateMealEntries} />
