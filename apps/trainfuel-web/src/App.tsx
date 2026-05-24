@@ -79,8 +79,8 @@ function App() {
                 <StatusText tone="danger">Could not load meal entries.</StatusText>
               ) : null}
 
-              {mealEntriesQuery.isSuccess ? (
-                <MealEntryList mealEntries={selectedDateMealEntries} />
+              {mealEntriesQuery.isSuccess && foodsQuery.isSuccess ? (
+                <MealEntryList mealEntries={selectedDateMealEntries} foods={foodsQuery.data} />
               ) : null}
             </SectionCard>
           </Stack>
