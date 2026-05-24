@@ -1,4 +1,4 @@
-import { Button, Card } from "@heroui/react"
+import { Button, Card, Table } from "@heroui/react"
 import type { MealEntry } from "@hobby/contracts"
 import {
   getMealTypeLabel,
@@ -10,8 +10,26 @@ type MealEntryListProps = {
   mealEntries: MealEntry[]
 }
 
-const calculateMealCalories = (mealEntry: MealEntry) => {
-  return mealEntry.food.calories * (mealEntry.quantityGrams / 100)
+type MealEntryMacros = {
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+}
+
+const calculateMealEntryMacros = (mealEntry: MealEntry): MealEntryMacros => {
+  const multiplier = mealEntry.quantityGrams / 100
+
+  return {
+    calories: mealEntry.food.calories * multiplier,
+    protein: mealEntry.food.protein * multiplier,
+    carbs: mealEntry.food.carbs * multiplier,
+    fat: mealEntry.food.fat * multiplier
+  }
+}
+
+const formatNumber = (value: number) => {
+  return Math.round(value)
 }
 
 export const MealEntryList = ({ mealEntries }: MealEntryListProps) => {
@@ -25,7 +43,7 @@ export const MealEntryList = ({ mealEntries }: MealEntryListProps) => {
   return (
     <Card.Content className="grid gap-4 p-0">
       {groups.map((group) => (
-        <Card key={group.mealType} className="p-4">
+        <Card key={group.mealType}>
           <Card.Header>
             <Card.Title>{getMealTypeLabel(group.mealType)}</Card.Title>
             <Card.Description>
@@ -34,33 +52,54 @@ export const MealEntryList = ({ mealEntries }: MealEntryListProps) => {
             </Card.Description>
           </Card.Header>
 
-          <Card.Content className="grid gap-2">
-            {group.mealEntries.length === 0 ? <Card.Description>No items.</Card.Description> : null}
+          <Card.Content>
+            {group.mealEntries.length === 0 ? (
+              <Card.Description>No items.</Card.Description>
+            ) : (
+              <Table>
+                <Table.ScrollContainer>
+                  <Table.Content aria-label={`${getMealTypeLabel(group.mealType)} meals`}>
+                    <Table.Header>
+                      <Table.Column>Food</Table.Column>
+                      <Table.Column>Grams</Table.Column>
+                      <Table.Column>Calories</Table.Column>
+                      <Table.Column>Protein</Table.Column>
+                      <Table.Column>Carbs</Table.Column>
+                      <Table.Column>Fat</Table.Column>
+                      <Table.Column>Actions</Table.Column>
+                    </Table.Header>
 
-            {group.mealEntries.map((mealEntry) => (
-              <Card key={mealEntry.id} className="p-3">
-                <Card.Content className="flex items-center justify-between gap-4 p-0">
-                  <Card.Content className="p-0">
-                    <Card.Title>{mealEntry.food.name}</Card.Title>
+                    <Table.Body>
+                      {group.mealEntries.map((mealEntry) => {
+                        const macros = calculateMealEntryMacros(mealEntry)
 
-                    <Card.Description>
-                      {mealEntry.quantityGrams}g · {Math.round(calculateMealCalories(mealEntry))}{" "}
-                      kcal
-                    </Card.Description>
-                  </Card.Content>
-
-                  <Button
-                    className="shrink-0 bg-red-600 text-white hover:bg-red-700"
-                    isDisabled={deleteMealEntryMutation.isPending}
-                    onPress={() => {
-                      deleteMealEntryMutation.mutate(mealEntry.id)
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </Card.Content>
-              </Card>
-            ))}
+                        return (
+                          <Table.Row key={mealEntry.id}>
+                            <Table.Cell>{mealEntry.food.name}</Table.Cell>
+                            <Table.Cell>{mealEntry.quantityGrams}g</Table.Cell>
+                            <Table.Cell>{formatNumber(macros.calories)} kcal</Table.Cell>
+                            <Table.Cell>{formatNumber(macros.protein)}g</Table.Cell>
+                            <Table.Cell>{formatNumber(macros.carbs)}g</Table.Cell>
+                            <Table.Cell>{formatNumber(macros.fat)}g</Table.Cell>
+                            <Table.Cell>
+                              <Button
+                                className="bg-red-600 text-white hover:bg-red-700"
+                                isDisabled={deleteMealEntryMutation.isPending}
+                                onPress={() => {
+                                  deleteMealEntryMutation.mutate(mealEntry.id)
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </Table.Cell>
+                          </Table.Row>
+                        )
+                      })}
+                    </Table.Body>
+                  </Table.Content>
+                </Table.ScrollContainer>
+              </Table>
+            )}
           </Card.Content>
         </Card>
       ))}
