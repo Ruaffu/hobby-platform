@@ -1,15 +1,8 @@
 import { Tabs } from "@heroui/react"
 import { useState } from "react"
 import { CreateFoodForm } from "./components/foods/CreateFoodForm"
-import { FoodList } from "./components/foods/FoodList"
-import {
-  AppGrid,
-  DashboardGrid,
-  Page,
-  PageHeader,
-  SectionCard,
-  Stack
-} from "./components/layout/Page"
+import { FoodTable } from "./components/foods/FoodTable"
+import { DashboardGrid, Page, PageHeader, SectionCard, Stack } from "./components/layout/Page"
 import { StatusText } from "./components/layout/StatusText"
 import { CreateMealEntryForm } from "./components/meals/CreateMealEntryForm"
 import { DailyTotalsCard } from "./components/meals/DailyTotalsCard"
@@ -104,7 +97,7 @@ function App() {
                 <StatusText tone="danger">Could not load foods.</StatusText>
               ) : null}
 
-              {foodsQuery.isSuccess ? <FoodList foods={foodsQuery.data} /> : null}
+              {foodsQuery.isSuccess ? <FoodTable foods={foodsQuery.data} /> : null}
             </SectionCard>
           </Stack>
         </Tabs.Panel>
