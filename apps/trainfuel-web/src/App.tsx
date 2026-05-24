@@ -1,3 +1,4 @@
+import { Tabs } from "@heroui/react"
 import { useState } from "react"
 import { CreateFoodForm } from "./components/foods/CreateFoodForm"
 import { FoodList } from "./components/foods/FoodList"
@@ -24,6 +25,7 @@ function App() {
   const mealEntriesQuery = useMealEntries()
 
   const [selectedDate, setSelectedDate] = useState(() => new Date())
+  const [selectedTab, setSelectedTab] = useState<"today" | "foods">("today")
 
   const selectedDateMealEntries = mealEntriesQuery.isSuccess
     ? filterMealEntriesForDate(mealEntriesQuery.data, selectedDate)
@@ -38,49 +40,75 @@ function App() {
 
       <SelectedDateField selectedDate={selectedDate} onSelectedDateChange={setSelectedDate} />
 
-      <DashboardGrid>
-        {mealEntriesQuery.isSuccess ? (
-          <DailyTotalsCard mealEntries={selectedDateMealEntries} />
-        ) : null}
+      <Tabs
+        selectedKey={selectedTab}
+        onSelectionChange={(key) => {
+          setSelectedTab(key as "today" | "foods")
+        }}
+      >
+        <Tabs.ListContainer>
+          <Tabs.List aria-label="TrainFuel sections">
+            <Tabs.Tab id="today">
+              <Tabs.Indicator />
+              Today
+            </Tabs.Tab>
 
-        {mealEntriesQuery.isSuccess ? (
-          <WeeklyCaloriesChart mealEntries={mealEntriesQuery.data} />
-        ) : null}
-      </DashboardGrid>
+            <Tabs.Tab id="foods">
+              <Tabs.Indicator />
+              Foods
+            </Tabs.Tab>
+          </Tabs.List>
+        </Tabs.ListContainer>
 
-      <AppGrid>
-        <Stack>
-          {foodsQuery.isSuccess ? (
-            <CreateMealEntryForm foods={foodsQuery.data} selectedDate={selectedDate} />
-          ) : null}
+        <Tabs.Panel id="today">
+          <Stack>
+            <DashboardGrid>
+              {mealEntriesQuery.isSuccess ? (
+                <DailyTotalsCard mealEntries={selectedDateMealEntries} />
+              ) : null}
 
-          <CreateFoodForm />
-        </Stack>
+              {mealEntriesQuery.isSuccess ? (
+                <WeeklyCaloriesChart mealEntries={mealEntriesQuery.data} />
+              ) : null}
+            </DashboardGrid>
 
-        <Stack>
-          <SectionCard title="Selected day meals" description="Foods logged for the selected day.">
-            {mealEntriesQuery.isLoading ? <StatusText>Loading meal entries...</StatusText> : null}
-
-            {mealEntriesQuery.isError ? (
-              <StatusText tone="danger">Could not load meal entries.</StatusText>
+            {foodsQuery.isSuccess ? (
+              <CreateMealEntryForm foods={foodsQuery.data} selectedDate={selectedDate} />
             ) : null}
 
-            {mealEntriesQuery.isSuccess ? (
-              <MealEntryList mealEntries={selectedDateMealEntries} />
-            ) : null}
-          </SectionCard>
+            <SectionCard
+              title="Selected day meals"
+              description="Meals grouped by breakfast, lunch, dinner, and snack."
+            >
+              {mealEntriesQuery.isLoading ? <StatusText>Loading meal entries...</StatusText> : null}
 
-          <SectionCard title="Foods" description="Your reusable food items.">
-            {foodsQuery.isLoading ? <StatusText>Loading foods...</StatusText> : null}
+              {mealEntriesQuery.isError ? (
+                <StatusText tone="danger">Could not load meal entries.</StatusText>
+              ) : null}
 
-            {foodsQuery.isError ? (
-              <StatusText tone="danger">Could not load foods.</StatusText>
-            ) : null}
+              {mealEntriesQuery.isSuccess ? (
+                <MealEntryList mealEntries={selectedDateMealEntries} />
+              ) : null}
+            </SectionCard>
+          </Stack>
+        </Tabs.Panel>
 
-            {foodsQuery.isSuccess ? <FoodList foods={foodsQuery.data} /> : null}
-          </SectionCard>
-        </Stack>
-      </AppGrid>
+        <Tabs.Panel id="foods">
+          <Stack>
+            <CreateFoodForm />
+
+            <SectionCard title="Foods" description="Manage your reusable foods.">
+              {foodsQuery.isLoading ? <StatusText>Loading foods...</StatusText> : null}
+
+              {foodsQuery.isError ? (
+                <StatusText tone="danger">Could not load foods.</StatusText>
+              ) : null}
+
+              {foodsQuery.isSuccess ? <FoodList foods={foodsQuery.data} /> : null}
+            </SectionCard>
+          </Stack>
+        </Tabs.Panel>
+      </Tabs>
     </Page>
   )
 }
