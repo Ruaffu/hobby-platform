@@ -43,7 +43,7 @@ export const CreateFoodForm = () => {
   }
 
   return (
-    <Card className="max-w-xl">
+    <Card>
       <Card.Header>
         <Card.Title>Add food</Card.Title>
         <Card.Description>Add a reusable food with calories and macros.</Card.Description>

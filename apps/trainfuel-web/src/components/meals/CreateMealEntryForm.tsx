@@ -103,7 +103,7 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
   }
 
   return (
-    <Card className="max-w-xl">
+    <Card>
       <Card.Header>
         <Card.Title>Log meal</Card.Title>
         <Card.Description>
