@@ -37,6 +37,10 @@ export const router = {
 
     create: mealProcedures.create.handler(async ({ input }) => {
       return mealService.createMealEntry(input)
+    }),
+
+    delete: mealProcedures.delete.handler(async ({ input }) => {
+      return mealService.deleteMealEntry(input.id)
     })
   }
 }

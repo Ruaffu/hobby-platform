@@ -37,5 +37,26 @@ export const mealRepository = {
     })
 
     return mealEntryRepository.save(mealEntry)
+  },
+
+  async deleteById(id: string) {
+    const mealEntry = await mealEntryRepository.findOne({
+      where: {
+        id
+      },
+      relations: {
+        food: true
+      }
+    })
+
+    if (!mealEntry) {
+      return null
+    }
+
+    await mealEntryRepository.delete({
+      id
+    })
+
+    return mealEntry
   }
 }

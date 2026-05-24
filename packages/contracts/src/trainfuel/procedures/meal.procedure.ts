@@ -1,5 +1,10 @@
 import { os } from "@orpc/server"
-import { CreateMealEntrySchema, MealEntryListSchema, MealEntrySchema } from "../meal/mealEntry"
+import {
+  CreateMealEntrySchema,
+  DeleteMealEntrySchema,
+  MealEntryListSchema,
+  MealEntrySchema
+} from "../meal/mealEntry"
 
 export const mealProcedures = {
   list: os
@@ -15,5 +20,13 @@ export const mealProcedures = {
       path: "/meal-entries"
     })
     .input(CreateMealEntrySchema)
+    .output(MealEntrySchema),
+
+  delete: os
+    .route({
+      method: "DELETE",
+      path: "/meal-entries/{id}"
+    })
+    .input(DeleteMealEntrySchema)
     .output(MealEntrySchema)
 }

@@ -20,6 +20,11 @@ export const CreateMealEntrySchema = z.object({
   loggedAt: z.iso.datetime().optional()
 })
 
+export const DeleteMealEntrySchema = z.object({
+  id: z.uuid()
+})
+
 export type MealType = z.infer<typeof MealTypeSchema>
 export type MealEntry = z.infer<typeof MealEntrySchema>
 export type CreateMealEntry = z.infer<typeof CreateMealEntrySchema>
+export type DeleteMealEntry = z.infer<typeof DeleteMealEntrySchema>

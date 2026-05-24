@@ -21,3 +21,11 @@ export const createMealEntry = async (input: CreateMealEntry): Promise<MealEntry
 
   return MealEntrySchema.parse(data)
 }
+
+export const deleteMealEntry = async (id: string): Promise<MealEntry> => {
+  const data = await apiRequest<unknown>(`/meal-entries/${id}`, {
+    method: "DELETE"
+  })
+
+  return MealEntrySchema.parse(data)
+}

@@ -34,5 +34,15 @@ export const mealService = {
     }
 
     return toMealEntry(mealEntry)
+  },
+
+  async deleteMealEntry(id: string) {
+    const deletedMealEntry = await mealRepository.deleteById(id)
+
+    if (!deletedMealEntry) {
+      throw new Error("Meal entry not found")
+    }
+
+    return toMealEntry(deletedMealEntry)
   }
 }
