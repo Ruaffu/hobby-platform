@@ -5,12 +5,16 @@ import { StatusText } from "./components/layout/StatusText"
 import { CreateMealEntryForm } from "./components/meals/CreateMealEntryForm"
 import { DailyTotalsCard } from "./components/meals/DailyTotalsCard"
 import { MealEntryList } from "./components/meals/MealEntryList"
+import { filterMealEntriesForToday } from "./features/dates/dateFilters"
 import { useFoods } from "./queries/foodQueries"
 import { useMealEntries } from "./queries/mealEntryQueries"
 
 function App() {
   const foodsQuery = useFoods()
   const mealEntriesQuery = useMealEntries()
+  const todaysMealEntries = mealEntriesQuery.isSuccess
+    ? filterMealEntriesForToday(mealEntriesQuery.data)
+    : []
 
   return (
     <Page>
@@ -33,14 +37,14 @@ function App() {
         {foodsQuery.isSuccess ? <FoodList foods={foodsQuery.data} /> : null}
       </SectionCard>
 
-      <SectionCard title="Meal log" description="Foods you have logged.">
+      <SectionCard title="Today&apos;s meals" description="Foods logged today.">
         {mealEntriesQuery.isLoading ? <StatusText>Loading meal entries...</StatusText> : null}
 
         {mealEntriesQuery.isError ? (
           <StatusText tone="danger">Could not load meal entries.</StatusText>
         ) : null}
 
-        {mealEntriesQuery.isSuccess ? <MealEntryList mealEntries={mealEntriesQuery.data} /> : null}
+        {mealEntriesQuery.isSuccess ? <MealEntryList mealEntries={todaysMealEntries} /> : null}
       </SectionCard>
     </Page>
   )
