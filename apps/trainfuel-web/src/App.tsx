@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { CreateFoodForm } from "./components/foods/CreateFoodForm"
 import { FoodList } from "./components/foods/FoodList"
 import { Page, PageHeader, SectionCard } from "./components/layout/Page"
@@ -5,16 +6,20 @@ import { StatusText } from "./components/layout/StatusText"
 import { CreateMealEntryForm } from "./components/meals/CreateMealEntryForm"
 import { DailyTotalsCard } from "./components/meals/DailyTotalsCard"
 import { MealEntryList } from "./components/meals/MealEntryList"
+import { SelectedDateField } from "./components/meals/SelectedDateField"
 import { WeeklyCaloriesChart } from "./components/meals/WeeklyCaloriesChart"
-import { filterMealEntriesForToday } from "./features/dates/dateFilters"
+import { filterMealEntriesForDate } from "./features/dates/dateFilters"
 import { useFoods } from "./queries/foodQueries"
 import { useMealEntries } from "./queries/mealEntryQueries"
 
 function App() {
   const foodsQuery = useFoods()
   const mealEntriesQuery = useMealEntries()
-  const todaysMealEntries = mealEntriesQuery.isSuccess
-    ? filterMealEntriesForToday(mealEntriesQuery.data)
+
+  const [selectedDate, setSelectedDate] = useState(() => new Date())
+
+  const selectedDateMealEntries = mealEntriesQuery.isSuccess
+    ? filterMealEntriesForDate(mealEntriesQuery.data, selectedDate)
     : []
 
   return (
@@ -24,11 +29,15 @@ function App() {
         description="Simple food and macro tracking for everyday meals."
       />
 
+      <SelectedDateField selectedDate={selectedDate} onSelectedDateChange={setSelectedDate} />
+
       <CreateFoodForm />
 
       {foodsQuery.isSuccess ? <CreateMealEntryForm foods={foodsQuery.data} /> : null}
 
-      {mealEntriesQuery.isSuccess ? <DailyTotalsCard mealEntries={mealEntriesQuery.data} /> : null}
+      {mealEntriesQuery.isSuccess ? (
+        <DailyTotalsCard mealEntries={selectedDateMealEntries} />
+      ) : null}
 
       {mealEntriesQuery.isSuccess ? (
         <WeeklyCaloriesChart mealEntries={mealEntriesQuery.data} />
@@ -42,14 +51,16 @@ function App() {
         {foodsQuery.isSuccess ? <FoodList foods={foodsQuery.data} /> : null}
       </SectionCard>
 
-      <SectionCard title="Today&apos;s meals" description="Foods logged today.">
+      <SectionCard title="Selected day meals" description="Foods logged for the selected day.">
         {mealEntriesQuery.isLoading ? <StatusText>Loading meal entries...</StatusText> : null}
 
         {mealEntriesQuery.isError ? (
           <StatusText tone="danger">Could not load meal entries.</StatusText>
         ) : null}
 
-        {mealEntriesQuery.isSuccess ? <MealEntryList mealEntries={todaysMealEntries} /> : null}
+        {mealEntriesQuery.isSuccess ? (
+          <MealEntryList mealEntries={selectedDateMealEntries} />
+        ) : null}
       </SectionCard>
     </Page>
   )
