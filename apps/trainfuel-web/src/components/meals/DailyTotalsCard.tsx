@@ -2,6 +2,11 @@ import { Card } from "@heroui/react"
 import type { DailyGoal, MealEntry } from "@hobby/contracts"
 import { calculateGoalProgress } from "../../features/nutrition/goalProgress"
 import { calculateNutritionTotals } from "../../features/nutrition/nutritionTotals"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type DailyTotalsCardProps = {
   mealEntries: MealEntry[]
@@ -39,25 +44,25 @@ const ProgressBar = ({ value }: ProgressBarProps) => {
 
 const MacroStatCard = ({ label, value, unit, goal, progress }: MacroStatCardProps) => {
   return (
-    <Card className="p-4">
+    <ThemedCard className="p-4">
       <Card.Content className="gap-2">
-        <Card.Description>{label}</Card.Description>
+        <ThemedCardDescription>{label}</ThemedCardDescription>
 
-        <Card.Title>
+        <ThemedCardTitle>
           {formatNumber(value)} {unit}
-        </Card.Title>
+        </ThemedCardTitle>
 
         {goal !== undefined && progress !== undefined ? (
           <>
-            <Card.Description>
+            <ThemedCardDescription>
               Goal: {formatNumber(goal)} {unit}
-            </Card.Description>
+            </ThemedCardDescription>
 
             <ProgressBar value={progress} />
           </>
         ) : null}
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }
 
@@ -66,12 +71,12 @@ export const DailyTotalsCard = ({ mealEntries, dailyGoal }: DailyTotalsCardProps
   const progress = dailyGoal ? calculateGoalProgress(totals, dailyGoal) : null
 
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header>
-        <Card.Title>Daily totals</Card.Title>
-        <Card.Description>
+        <ThemedCardTitle>Daily totals</ThemedCardTitle>
+        <ThemedCardDescription>
           Estimated intake from meals logged for the selected day.
-        </Card.Description>
+        </ThemedCardDescription>
       </Card.Header>
 
       <Card.Content className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -107,6 +112,6 @@ export const DailyTotalsCard = ({ mealEntries, dailyGoal }: DailyTotalsCardProps
           value={totals.fat}
         />
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

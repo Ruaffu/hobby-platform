@@ -4,6 +4,9 @@ import { useMemo, useState } from "react"
 import { calculatePageCount, paginate } from "../../features/pagination/paginate"
 import { DeleteFoodDialog } from "./DeleteFoodDialog"
 import { EditFoodDialog } from "./EditFoodDialog"
+import {
+  ThemedCardDescription
+} from "../layout/ThemedCard"
 
 type FoodTableProps = {
   foods: Food[]
@@ -27,7 +30,7 @@ export const FoodTable = ({ foods }: FoodTableProps) => {
   }, [foods, page])
 
   if (foods.length === 0) {
-    return <Card.Description>No foods added yet.</Card.Description>
+    return <ThemedCardDescription>No foods added yet.</ThemedCardDescription>
   }
 
   return (
@@ -81,9 +84,9 @@ export const FoodTable = ({ foods }: FoodTableProps) => {
 
         <Table.Footer>
           <Card.Content className="flex flex-row items-center justify-between gap-4 p-0">
-            <Card.Description>
+            <ThemedCardDescription>
               Page {page} of {pageCount} · Showing {visibleFoods.length} of {foods.length} foods
-            </Card.Description>
+            </ThemedCardDescription>
 
             <Card.Content className="flex flex-row gap-2 p-0">
               <Button

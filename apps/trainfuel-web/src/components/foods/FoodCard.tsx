@@ -2,6 +2,11 @@ import { Button, Card } from "@heroui/react"
 import type { Food } from "@hobby/contracts"
 import { useState } from "react"
 import { EditFoodDialog } from "./EditFoodDialog"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type FoodCardProps = {
   food: Food
@@ -12,14 +17,14 @@ export const FoodCard = ({ food, onDeletePress }: FoodCardProps) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
   return (
-    <Card className="p-4">
+    <ThemedCard className="p-4">
       <Card.Content className="flex items-center justify-between gap-4">
         <Card.Content className="p-0">
-          <Card.Title>{food.name}</Card.Title>
+          <ThemedCardTitle>{food.name}</ThemedCardTitle>
 
-          <Card.Description>
+          <ThemedCardDescription>
             {food.calories} kcal · {food.protein}g protein · {food.carbs}g carbs · {food.fat}g fat
-          </Card.Description>
+          </ThemedCardDescription>
         </Card.Content>
 
         <Button
@@ -35,6 +40,6 @@ export const FoodCard = ({ food, onDeletePress }: FoodCardProps) => {
 
         <EditFoodDialog food={food} isOpen={isEditDialogOpen} onOpenChange={setIsEditDialogOpen} />
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

@@ -7,6 +7,10 @@ import {
 } from "../../features/nutrition/groupMealEntries"
 import { useDeleteMealEntry } from "../../queries/mealEntryQueries"
 import { EditMealEntryDialog } from "./EditMealEntryDialog"
+import {
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type MealEntryListProps = {
   mealEntries: MealEntry[]
@@ -41,7 +45,7 @@ export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
   const [mealEntryToEdit, setMealEntryToEdit] = useState<MealEntry | null>(null)
 
   if (mealEntries.length === 0) {
-    return <Card.Description>No meals logged for this day yet.</Card.Description>
+    return <ThemedCardDescription>No meals logged for this day yet.</ThemedCardDescription>
   }
 
   return (
@@ -50,16 +54,16 @@ export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
         {groups.map((group) => (
           <Card key={group.mealType}>
             <Card.Header>
-              <Card.Title>{getMealTypeLabel(group.mealType)}</Card.Title>
-              <Card.Description>
+              <ThemedCardTitle>{getMealTypeLabel(group.mealType)}</ThemedCardTitle>
+              <ThemedCardDescription>
                 {group.mealEntries.length} logged item
                 {group.mealEntries.length === 1 ? "" : "s"}
-              </Card.Description>
+              </ThemedCardDescription>
             </Card.Header>
 
             <Card.Content>
               {group.mealEntries.length === 0 ? (
-                <Card.Description>No items.</Card.Description>
+                <ThemedCardDescription>No items.</ThemedCardDescription>
               ) : (
                 <Table>
                   <Table.ScrollContainer>

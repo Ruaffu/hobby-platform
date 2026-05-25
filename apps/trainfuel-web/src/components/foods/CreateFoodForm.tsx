@@ -4,6 +4,11 @@ import { ZodError } from "zod"
 import { useCreateFood } from "../../queries/foodQueries"
 import { FoodFormField } from "./FoodFormField"
 import { parseFoodForm } from "./parseFoodForm"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
 
@@ -43,10 +48,10 @@ export const CreateFoodForm = () => {
   }
 
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header>
-        <Card.Title>Add food</Card.Title>
-        <Card.Description>Add a reusable food with calories and macros.</Card.Description>
+        <ThemedCardTitle>Add food</ThemedCardTitle>
+        <ThemedCardDescription>Add a reusable food with calories and macros.</ThemedCardDescription>
       </Card.Header>
 
       <Card.Content>
@@ -117,6 +122,6 @@ export const CreateFoodForm = () => {
           ) : null}
         </Form>
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

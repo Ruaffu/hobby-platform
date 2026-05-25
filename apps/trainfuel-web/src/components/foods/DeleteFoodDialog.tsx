@@ -1,6 +1,9 @@
 import { AlertDialog, Button, Card } from "@heroui/react"
 import type { Food } from "@hobby/contracts"
 import { useDeleteFood } from "../../queries/foodQueries"
+import {
+  ThemedCardDescription
+} from "../layout/ThemedCard"
 
 type DeleteFoodDialogProps = {
   food: Food
@@ -29,9 +32,9 @@ export const DeleteFoodDialog = ({ food, isOpen, onOpenChange }: DeleteFoodDialo
             </AlertDialog.Header>
 
             <AlertDialog.Body className="flex flex-col gap-3">
-              <Card.Description>
+              <ThemedCardDescription>
                 This will permanently delete {food.name}. This action cannot be undone.
-              </Card.Description>
+              </ThemedCardDescription>
 
               {deleteFoodMutation.isError ? (
                 <Card className="border border-red-200 bg-red-50">

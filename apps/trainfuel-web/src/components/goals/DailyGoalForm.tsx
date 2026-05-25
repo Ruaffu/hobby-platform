@@ -4,6 +4,11 @@ import { type ComponentProps, useState } from "react"
 import { ZodError } from "zod"
 import { useUpsertDailyGoal } from "../../queries/goalQueries"
 import { FoodFormField } from "../foods/FoodFormField"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type DailyGoalFormProps = {
   dailyGoal: DailyGoal | null
@@ -60,10 +65,10 @@ export const DailyGoalForm = ({ dailyGoal }: DailyGoalFormProps) => {
   }
 
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header>
-        <Card.Title>Daily goals</Card.Title>
-        <Card.Description>Set your target calories and macros.</Card.Description>
+        <ThemedCardTitle>Daily goals</ThemedCardTitle>
+        <ThemedCardDescription>Set your target calories and macros.</ThemedCardDescription>
       </Card.Header>
 
       <Card.Content>
@@ -144,10 +149,10 @@ export const DailyGoalForm = ({ dailyGoal }: DailyGoalFormProps) => {
           ) : null}
 
           {upsertDailyGoalMutation.isSuccess ? (
-            <Card.Description>Goals saved.</Card.Description>
+            <ThemedCardDescription>Goals saved.</ThemedCardDescription>
           ) : null}
         </Form>
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

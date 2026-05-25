@@ -1,5 +1,10 @@
 import { Card } from "@heroui/react"
 import type { PropsWithChildren, ReactNode } from "react"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type PageProps = PropsWithChildren
 
@@ -30,19 +35,19 @@ type SectionCardProps = PropsWithChildren<{
 
 export const SectionCard = ({ title, description, action, children }: SectionCardProps) => {
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <Card.Title>{title}</Card.Title>
+          <ThemedCardTitle>{title}</ThemedCardTitle>
 
-          {description ? <Card.Description>{description}</Card.Description> : null}
+          {description ? <ThemedCardDescription>{description}</ThemedCardDescription> : null}
         </div>
 
         {action}
       </Card.Header>
 
       <Card.Content>{children}</Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }
 

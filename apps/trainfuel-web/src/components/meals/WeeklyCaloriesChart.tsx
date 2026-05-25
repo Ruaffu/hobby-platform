@@ -10,6 +10,11 @@ import {
   YAxis
 } from "recharts"
 import { calculateWeeklyNutrition } from "../../features/nutrition/weeklyNutrition"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type WeeklyCaloriesChartProps = {
   mealEntries: MealEntry[]
@@ -19,10 +24,10 @@ export const WeeklyCaloriesChart = ({ mealEntries }: WeeklyCaloriesChartProps) =
   const weeklyNutrition = calculateWeeklyNutrition(mealEntries)
 
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header>
-        <Card.Title>Weekly calories</Card.Title>
-        <Card.Description>Calories logged over the last 7 days</Card.Description>
+        <ThemedCardTitle>Weekly calories</ThemedCardTitle>
+        <ThemedCardDescription>Calories logged over the last 7 days</ThemedCardDescription>
       </Card.Header>
 
       <Card.Content>
@@ -36,6 +41,6 @@ export const WeeklyCaloriesChart = ({ mealEntries }: WeeklyCaloriesChartProps) =
           </LineChart>
         </ResponsiveContainer>
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

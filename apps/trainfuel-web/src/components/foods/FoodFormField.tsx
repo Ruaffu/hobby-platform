@@ -1,4 +1,5 @@
-import { FieldError, Input, Label, TextField } from "@heroui/react"
+import { FieldError, Input, TextField } from "@heroui/react"
+import { ThemedLabel } from "../layout/ThemedCard"
 import type { ComponentProps } from "react"
 
 type FoodFormFieldProps = Omit<ComponentProps<typeof TextField>, "children" | "name"> & {
@@ -17,7 +18,7 @@ export const FoodFormField = ({
 }: FoodFormFieldProps) => {
   return (
     <TextField isRequired name={name} {...textFieldProps}>
-      <Label>{label}</Label>
+      <ThemedLabel>{label}</ThemedLabel>
       <Input placeholder={placeholder} {...inputProps} />
       <FieldError />
     </TextField>

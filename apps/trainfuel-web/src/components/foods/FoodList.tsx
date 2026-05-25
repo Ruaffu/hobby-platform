@@ -3,6 +3,9 @@ import type { Food } from "@hobby/contracts"
 import { useState } from "react"
 import { DeleteFoodDialog } from "./DeleteFoodDialog"
 import { FoodCard } from "./FoodCard"
+import {
+  ThemedCardDescription
+} from "../layout/ThemedCard"
 
 type FoodListProps = {
   foods: Food[]
@@ -12,7 +15,7 @@ export const FoodList = ({ foods }: FoodListProps) => {
   const [foodToDelete, setFoodToDelete] = useState<Food | null>(null)
 
   if (foods.length === 0) {
-    return <Card.Description>No foods added yet.</Card.Description>
+    return <ThemedCardDescription>No foods added yet.</ThemedCardDescription>
   }
 
   return (

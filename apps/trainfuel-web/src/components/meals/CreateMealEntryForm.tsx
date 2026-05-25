@@ -14,6 +14,11 @@ import { type ComponentProps, useState } from "react"
 import { ZodError } from "zod"
 import { toLocalNoonIsoString } from "../../features/dates/dateFilters"
 import { useCreateMealEntry } from "../../queries/mealEntryQueries"
+import {
+  ThemedCard,
+  ThemedCardDescription,
+  ThemedCardTitle
+} from "../layout/ThemedCard"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
 
@@ -103,12 +108,12 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
   }
 
   return (
-    <Card>
+    <ThemedCard>
       <Card.Header>
-        <Card.Title>Log meal</Card.Title>
-        <Card.Description>
+        <ThemedCardTitle>Log meal</ThemedCardTitle>
+        <ThemedCardDescription>
           Choose a food and log how many grams you ate for the selected date.
-        </Card.Description>
+        </ThemedCardDescription>
       </Card.Header>
 
       <Card.Content>
@@ -166,7 +171,7 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
           </Button>
 
           {foods.length === 0 ? (
-            <Card.Description>Add a food before logging a meal.</Card.Description>
+            <ThemedCardDescription>Add a food before logging a meal.</ThemedCardDescription>
           ) : null}
 
           {validationError ? (
@@ -188,6 +193,6 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
           ) : null}
         </Form>
       </Card.Content>
-    </Card>
+    </ThemedCard>
   )
 }

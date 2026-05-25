@@ -128,6 +128,60 @@
   background: var(--drac-orange);
 }
 
+.trainfuel-card {
+  background: white;
+  color: #0f172a;
+}
+
+.trainfuel-card-description {
+  color: #64748b;
+}
+
+.dark .trainfuel-card {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark .trainfuel-card-description {
+  color: #94a3b8;
+}
+
+.dracula .trainfuel-card {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+}
+
+.dracula .trainfuel-card-description {
+  color: var(--drac-comment);
+}
+
+.trainfuel-card-title {
+  color: #0f172a;
+}
+
+.trainfuel-label {
+  color: #0f172a;
+}
+
+.dark .trainfuel-card-title,
+.dark .trainfuel-label {
+  color: #e2e8f0;
+}
+
+.dracula .trainfuel-card-title,
+.dracula .trainfuel-label {
+  color: var(--drac-fg);
+}
+
+.dracula input {
+  background: #343746;
+  color: var(--drac-fg);
+}
+
+.dracula input::placeholder {
+  color: var(--drac-comment);
+}
+
 body {
   margin: 0;
 }
