@@ -19,7 +19,7 @@ export const FoodFormField = ({
   return (
     <TextField isRequired name={name} {...textFieldProps}>
       <ThemedLabel>{label}</ThemedLabel>
-      <Input placeholder={placeholder} {...inputProps} />
+      <Input className={`trainfuel-input ${inputProps?.className ?? ""}`} placeholder={placeholder} {...inputProps} />
       <FieldError />
     </TextField>
   )

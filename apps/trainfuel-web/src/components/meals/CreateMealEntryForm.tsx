@@ -1,14 +1,4 @@
-import {
-  Button,
-  Card,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  ListBox,
-  Select,
-  TextField
-} from "@heroui/react"
+import { Button, Card, FieldError, Form, Input, ListBox, Select, TextField } from "@heroui/react"
 import type { Food, MealType } from "@hobby/contracts"
 import { type ComponentProps, useState } from "react"
 import { ZodError } from "zod"
@@ -17,7 +7,8 @@ import { useCreateMealEntry } from "../../queries/mealEntryQueries"
 import {
   ThemedCard,
   ThemedCardDescription,
-  ThemedCardTitle
+  ThemedCardTitle,
+  ThemedLabel
 } from "../layout/ThemedCard"
 
 type FormSubmitHandler = NonNullable<ComponentProps<typeof Form>["onSubmit"]>
@@ -119,8 +110,8 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
       <Card.Content>
         <Form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <Select isRequired name="foodId" placeholder="Choose food">
-            <Label>Food</Label>
-            <Select.Trigger>
+            <ThemedLabel>Food</ThemedLabel>
+            <Select.Trigger className="trainfuel-select-trigger">
               <Select.Value />
               <Select.Indicator />
             </Select.Trigger>
@@ -138,8 +129,8 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
           </Select>
 
           <Select isRequired name="mealType" placeholder="Choose meal">
-            <Label>Meal</Label>
-            <Select.Trigger>
+            <ThemedLabel>Meal</ThemedLabel>
+            <Select.Trigger className="trainfuel-select-trigger">
               <Select.Value />
               <Select.Indicator />
             </Select.Trigger>
@@ -157,8 +148,8 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
           </Select>
 
           <TextField isRequired name="quantityGrams">
-            <Label>Quantity in grams</Label>
-            <Input placeholder="200" type="number" />
+            <ThemedLabel>Quantity in grams</ThemedLabel>
+            <Input className="trainfuel-input" placeholder="200" type="number" />
             <FieldError />
           </TextField>
 

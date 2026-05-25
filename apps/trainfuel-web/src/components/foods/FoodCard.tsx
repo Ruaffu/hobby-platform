@@ -1,12 +1,8 @@
 import { Button, Card } from "@heroui/react"
 import type { Food } from "@hobby/contracts"
 import { useState } from "react"
+import { ThemedCard, ThemedCardDescription, ThemedCardTitle } from "../layout/ThemedCard"
 import { EditFoodDialog } from "./EditFoodDialog"
-import {
-  ThemedCard,
-  ThemedCardDescription,
-  ThemedCardTitle
-} from "../layout/ThemedCard"
 
 type FoodCardProps = {
   food: Food
@@ -27,10 +23,7 @@ export const FoodCard = ({ food, onDeletePress }: FoodCardProps) => {
           </ThemedCardDescription>
         </Card.Content>
 
-        <Button
-          className="bg-default-100 text-default-900 hover:bg-default-200"
-          onPress={() => setIsEditDialogOpen(true)}
-        >
+        <Button className="trainfuel-secondary-button" onPress={() => setIsEditDialogOpen(true)}>
           Edit
         </Button>
 

@@ -1,4 +1,7 @@
-import { FieldError, Input, Label, TextField } from "@heroui/react"
+import { FieldError, Input, TextField } from "@heroui/react"
+import {
+ThemedLabel
+} from "../layout/ThemedCard"
 
 type SelectedDateFieldProps = {
   selectedDate: Date
@@ -19,9 +22,10 @@ export const SelectedDateField = ({
 }: SelectedDateFieldProps) => {
   return (
     <TextField>
-      <Label>Selected date</Label>
+      <ThemedLabel>Selected date</ThemedLabel>
 
       <Input
+      className="trainfuel-input"
         type="date"
         value={toDateInputValue(selectedDate)}
         onChange={(event) => {

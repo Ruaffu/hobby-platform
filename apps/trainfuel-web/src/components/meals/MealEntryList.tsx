@@ -6,11 +6,8 @@ import {
   groupMealEntriesByMealType
 } from "../../features/nutrition/groupMealEntries"
 import { useDeleteMealEntry } from "../../queries/mealEntryQueries"
+import { ThemedCard, ThemedCardDescription, ThemedCardTitle } from "../layout/ThemedCard"
 import { EditMealEntryDialog } from "./EditMealEntryDialog"
-import {
-  ThemedCardDescription,
-  ThemedCardTitle
-} from "../layout/ThemedCard"
 
 type MealEntryListProps = {
   mealEntries: MealEntry[]
@@ -41,8 +38,9 @@ const formatNumber = (value: number) => {
 
 export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
   const deleteMealEntryMutation = useDeleteMealEntry()
-  const groups = groupMealEntriesByMealType(mealEntries)
   const [mealEntryToEdit, setMealEntryToEdit] = useState<MealEntry | null>(null)
+
+  const groups = groupMealEntriesByMealType(mealEntries)
 
   if (mealEntries.length === 0) {
     return <ThemedCardDescription>No meals logged for this day yet.</ThemedCardDescription>
@@ -52,9 +50,10 @@ export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
     <>
       <Card.Content className="grid gap-4 p-0">
         {groups.map((group) => (
-          <Card key={group.mealType}>
+          <ThemedCard key={group.mealType} className="trainfuel-group-card">
             <Card.Header>
               <ThemedCardTitle>{getMealTypeLabel(group.mealType)}</ThemedCardTitle>
+
               <ThemedCardDescription>
                 {group.mealEntries.length} logged item
                 {group.mealEntries.length === 1 ? "" : "s"}
@@ -65,63 +64,65 @@ export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
               {group.mealEntries.length === 0 ? (
                 <ThemedCardDescription>No items.</ThemedCardDescription>
               ) : (
-                <Table>
-                  <Table.ScrollContainer>
-                    <Table.Content aria-label={`${getMealTypeLabel(group.mealType)} meals`}>
-                      <Table.Header>
-                        <Table.Column>Food</Table.Column>
-                        <Table.Column>Grams</Table.Column>
-                        <Table.Column>Calories</Table.Column>
-                        <Table.Column>Protein</Table.Column>
-                        <Table.Column>Carbs</Table.Column>
-                        <Table.Column>Fat</Table.Column>
-                        <Table.Column>Actions</Table.Column>
-                      </Table.Header>
+                <Card.Content className="trainfuel-table overflow-hidden rounded-xl border-0 p-0 shadow-none">
+                  <Table className="border-1 bg-transparent shadow-none">
+                    <Table.ScrollContainer>
+                      <Table.Content aria-label={`${getMealTypeLabel(group.mealType)} meals`}>
+                        <Table.Header>
+                          <Table.Column isRowHeader>Food</Table.Column>
+                          <Table.Column>Grams</Table.Column>
+                          <Table.Column>Calories</Table.Column>
+                          <Table.Column>Protein</Table.Column>
+                          <Table.Column>Carbs</Table.Column>
+                          <Table.Column>Fat</Table.Column>
+                          <Table.Column>Actions</Table.Column>
+                        </Table.Header>
 
-                      <Table.Body>
-                        {group.mealEntries.map((mealEntry) => {
-                          const macros = calculateMealEntryMacros(mealEntry)
+                        <Table.Body>
+                          {group.mealEntries.map((mealEntry) => {
+                            const macros = calculateMealEntryMacros(mealEntry)
 
-                          return (
-                            <Table.Row key={mealEntry.id}>
-                              <Table.Cell>{mealEntry.food.name}</Table.Cell>
-                              <Table.Cell>{mealEntry.quantityGrams}g</Table.Cell>
-                              <Table.Cell>{formatNumber(macros.calories)} kcal</Table.Cell>
-                              <Table.Cell>{formatNumber(macros.protein)}g</Table.Cell>
-                              <Table.Cell>{formatNumber(macros.carbs)}g</Table.Cell>
-                              <Table.Cell>{formatNumber(macros.fat)}g</Table.Cell>
-                              <Table.Cell>
-                                <Card.Content className="flex flex-row gap-2 p-0">
-                                  <Button
-                                    className="bg-default-100 text-default-900 hover:bg-default-200"
-                                    onPress={() => {
-                                      setMealEntryToEdit(mealEntry)
-                                    }}
-                                  >
-                                    Edit
-                                  </Button>
+                            return (
+                              <Table.Row key={mealEntry.id}>
+                                <Table.Cell>{mealEntry.food.name}</Table.Cell>
+                                <Table.Cell>{mealEntry.quantityGrams}g</Table.Cell>
+                                <Table.Cell>{formatNumber(macros.calories)} kcal</Table.Cell>
+                                <Table.Cell>{formatNumber(macros.protein)}g</Table.Cell>
+                                <Table.Cell>{formatNumber(macros.carbs)}g</Table.Cell>
+                                <Table.Cell>{formatNumber(macros.fat)}g</Table.Cell>
+                                <Table.Cell>
+                                  <Card.Content className="flex flex-row gap-2 p-0">
+                                    <Button
+                                      className="trainfuel-secondary-button"
+                                      onPress={() => {
+                                        setMealEntryToEdit(mealEntry)
+                                      }}
+                                    >
+                                      Edit
+                                    </Button>
 
-                                  <Button
-                                    className="trainfuel-danger-button"
-                                    isDisabled={deleteMealEntryMutation.isPending}
-                                    onPress={() => {
-                                      deleteMealEntryMutation.mutate(mealEntry.id)
-                                    }}
-                                  >
-                                    Delete
-                                  </Button>
-                                </Card.Content>
-                              </Table.Cell>
-                            </Table.Row>
-                          )
-                        })}
-                      </Table.Body>
-                    </Table.Content>
-                  </Table.ScrollContainer>
-                </Table>
+                                    <Button
+                                      className="trainfuel-danger-button"
+                                      isDisabled={deleteMealEntryMutation.isPending}
+                                      onPress={() => {
+                                        deleteMealEntryMutation.mutate(mealEntry.id)
+                                      }}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </Card.Content>
+                                </Table.Cell>
+                              </Table.Row>
+                            )
+                          })}
+                        </Table.Body>
+                      </Table.Content>
+                    </Table.ScrollContainer>
+                  </Table>
+                </Card.Content>
               )}
             </Card.Content>
-          </Card>
+          </ThemedCard>
         ))}
       </Card.Content>
 

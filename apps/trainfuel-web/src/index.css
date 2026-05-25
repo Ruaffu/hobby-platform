@@ -4,6 +4,7 @@
 :root {
   --drac-bg: #282a36;
   --drac-current-line: #44475a;
+  --drac-selection: #44475a;
   --drac-fg: #f8f8f2;
   --drac-comment: #6272a4;
   --drac-cyan: #8be9fd;
@@ -15,86 +16,178 @@
   --drac-yellow: #f1fa8c;
 }
 
+body {
+  margin: 0;
+}
+
+/* Page themes */
+
 .light {
+  min-height: 100vh;
   background: #f8fafc;
   color: #0f172a;
 }
 
 .dark {
+  min-height: 100vh;
   background: #020617;
   color: #e2e8f0;
 }
 
-.dark [class*="bg-default-100"] {
-  background: #1e293b;
-}
-
-.dark [class*="text-default-900"] {
-  color: #e2e8f0;
-}
-
 .dracula {
+  min-height: 100vh;
   background: var(--drac-bg);
   color: var(--drac-fg);
 }
 
-.dracula [class*="bg-default-100"] {
-  background: var(--drac-current-line);
+/* Cards */
+
+.trainfuel-card {
+  background: #ffffff;
+  color: #0f172a;
 }
 
-.dracula [class*="text-default-900"] {
+.trainfuel-card-title {
+  color: #0f172a;
+}
+
+.trainfuel-card-description {
+  color: #64748b;
+}
+
+.dark .trainfuel-card {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark .trainfuel-card-title {
+  color: #e2e8f0;
+}
+
+.dark .trainfuel-card-description {
+  color: #94a3b8;
+}
+
+.dracula .trainfuel-card {
+  background: var(--drac-current-line);
   color: var(--drac-fg);
 }
 
-.dracula [class*="text-default-500"] {
+.dracula .trainfuel-card-title {
+  color: var(--drac-fg);
+}
+
+.dracula .trainfuel-card-description {
   color: var(--drac-comment);
 }
 
-.dracula .trainfuel-progress-bar {
-  background: var(--drac-purple);
+/* Labels and form text */
+
+.trainfuel-label {
+  color: #0f172a;
 }
 
-.dracula [class*="bg-content1"],
-.dracula [class*="bg-background"],
-.dracula [class*="bg-default-50"] {
-  background: var(--drac-current-line);
+.dark .trainfuel-label {
+  color: #e2e8f0;
+}
+
+.dracula .trainfuel-label {
   color: var(--drac-fg);
 }
 
-.dracula [class*="border-default"] {
-  border-color: var(--drac-comment);
+.trainfuel-input {
+  color: #0f172a;
 }
 
-.dracula table {
-  color: var(--drac-fg);
+.dark .trainfuel-input {
+  color: #e2e8f0;
 }
 
-.dracula th {
-  color: var(--drac-purple);
-}
-
-.dracula td {
-  color: var(--drac-fg);
-}
-
-.dracula input,
-.dracula button,
-.dracula [role="button"] {
-  color: inherit;
-}
-
-.dracula input {
+.dracula .trainfuel-input {
   background: #343746;
   color: var(--drac-fg);
 }
 
-.dracula input::placeholder {
+.dracula .trainfuel-input::placeholder {
   color: var(--drac-comment);
 }
 
+/* Tables */
+
+.trainfuel-table {
+  overflow: hidden;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.trainfuel-table table,
+.trainfuel-table thead,
+.trainfuel-table tbody,
+.trainfuel-table tr,
+.trainfuel-table th,
+.trainfuel-table td {
+  background: transparent;
+  color: inherit;
+}
+
+.trainfuel-table th {
+  color: #334155;
+}
+
+.trainfuel-table td {
+  color: #0f172a;
+}
+
+.dark .trainfuel-table {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark .trainfuel-table th {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+.dark .trainfuel-table td {
+  color: #e2e8f0;
+}
+
+.dark .trainfuel-table table,
+.dark .trainfuel-table thead,
+.dark .trainfuel-table tbody,
+.dark .trainfuel-table tr,
+.dark .trainfuel-table td {
+  background: #0f172a;
+}
+
+.dracula .trainfuel-table {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+}
+
+.dracula .trainfuel-table table,
+.dracula .trainfuel-table thead,
+.dracula .trainfuel-table tbody,
+.dracula .trainfuel-table tr,
+.dracula .trainfuel-table td {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+}
+
+.dracula .trainfuel-table th {
+  background: #343746;
+  color: var(--drac-purple);
+}
+
+.dracula .trainfuel-table tr {
+  border-color: var(--drac-comment);
+}
+
+/* Buttons */
+
 .trainfuel-primary-button {
   background: #2563eb;
-  color: white;
+  color: #ffffff;
 }
 
 .trainfuel-primary-button:hover {
@@ -103,11 +196,21 @@
 
 .trainfuel-danger-button {
   background: #dc2626;
-  color: white;
+  color: #ffffff;
 }
 
 .trainfuel-danger-button:hover {
   background: #b91c1c;
+}
+
+.dark .trainfuel-primary-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.dark .trainfuel-danger-button {
+  background: #dc2626;
+  color: #ffffff;
 }
 
 .dracula .trainfuel-primary-button {
@@ -128,49 +231,46 @@
   background: var(--drac-orange);
 }
 
-.trainfuel-card {
-  background: white;
-  color: #0f172a;
+/* Progress bars */
+
+.trainfuel-progress-track {
+  background: #e2e8f0;
 }
 
-.trainfuel-card-description {
-  color: #64748b;
+.dark .trainfuel-progress-track {
+  background: #1e293b;
 }
 
-.dark .trainfuel-card {
-  background: #0f172a;
-  color: #e2e8f0;
+.dracula .trainfuel-progress-track {
+  background: #343746;
 }
 
-.dark .trainfuel-card-description {
-  color: #94a3b8;
+.trainfuel-progress-bar {
+  background: #2563eb;
 }
 
-.dracula .trainfuel-card {
-  background: var(--drac-current-line);
-  color: var(--drac-fg);
+.dark .trainfuel-progress-bar {
+  background: #60a5fa;
 }
 
-.dracula .trainfuel-card-description {
+.dracula .trainfuel-progress-bar {
+  background: var(--drac-purple);
+}
+
+/* Small HeroUI/Tailwind compatibility overrides */
+
+.dracula [class*="text-default-500"] {
   color: var(--drac-comment);
 }
 
-.trainfuel-card-title {
-  color: #0f172a;
-}
-
-.trainfuel-label {
-  color: #0f172a;
-}
-
-.dark .trainfuel-card-title,
-.dark .trainfuel-label {
-  color: #e2e8f0;
-}
-
-.dracula .trainfuel-card-title,
-.dracula .trainfuel-label {
+.dracula [class*="text-default-900"] {
   color: var(--drac-fg);
+}
+
+.dracula input,
+.dracula button,
+.dracula [role="button"] {
+  color: inherit;
 }
 
 .dracula input {
@@ -182,6 +282,170 @@
   color: var(--drac-comment);
 }
 
-body {
-  margin: 0;
+.trainfuel-table-footer {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.dark .trainfuel-table-footer {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dracula .trainfuel-table-footer {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+}
+
+.trainfuel-table {
+  border: none;
+  box-shadow: none;
+}
+
+.trainfuel-table * {
+  box-shadow: none;
+}
+
+.trainfuel-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dracula .trainfuel-table,
+.dracula .trainfuel-table *,
+.dracula .trainfuel-table table,
+.dracula .trainfuel-table thead,
+.dracula .trainfuel-table tbody,
+.dracula .trainfuel-table tr,
+.dracula .trainfuel-table th,
+.dracula .trainfuel-table td {
+  border-color: var(--drac-current-line);
+}
+
+/* Selects */
+
+.trainfuel-select-trigger {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.dark .trainfuel-select-trigger {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+.dracula .trainfuel-select-trigger {
+  background: #343746;
+  color: var(--drac-fg);
+  border-color: var(--drac-bg);
+}
+
+.dracula .trainfuel-select-trigger [class*="text-default"] {
+  color: var(--drac-fg);
+}
+
+/* Grouped meal cards */
+
+.trainfuel-group-card {
+  border: 1px solid #cbd5e1;
+}
+
+.dark .trainfuel-group-card {
+  border-color: #334155;
+}
+
+.dracula .trainfuel-group-card {
+  border-color: var(--drac-bg);
+}
+
+.trainfuel-secondary-button {
+  background: #e2e8f0;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.trainfuel-secondary-button:hover {
+  background: #cbd5e1;
+}
+
+.dark .trainfuel-secondary-button {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+.dark .trainfuel-secondary-button:hover {
+  background: #334155;
+}
+
+.dracula .trainfuel-secondary-button {
+  background: #343746;
+  color: var(--drac-fg);
+  border-color: var(--drac-bg);
+}
+
+.dracula .trainfuel-secondary-button:hover {
+  background: var(--drac-current-line);
+}
+
+.trainfuel-secondary-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Dialogs */
+
+.trainfuel-dialog-backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+.trainfuel-dialog-container {
+  background: transparent;
+}
+
+.trainfuel-dialog,
+.trainfuel-dialog-container > *,
+.trainfuel-dialog-container [role="dialog"] {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+.trainfuel-dialog *,
+.trainfuel-dialog-container [role="dialog"] * {
+  color: inherit;
+}
+
+.dark .trainfuel-dialog,
+.dark .trainfuel-dialog-container > *,
+.dark .trainfuel-dialog-container [role="dialog"] {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+.dracula .trainfuel-dialog,
+.dracula .trainfuel-dialog-container > *,
+.dracula .trainfuel-dialog-container [role="dialog"] {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+  border-color: var(--drac-bg);
+}
+
+.dracula .trainfuel-dialog input,
+.dracula .trainfuel-dialog-container input {
+  background: #343746;
+  color: var(--drac-fg);
+}
+
+.dracula .trainfuel-dialog input::placeholder,
+.dracula .trainfuel-dialog-container input::placeholder {
+  color: var(--drac-comment);
+}
+
+.dracula .trainfuel-dialog [class*="text-default"],
+.dracula .trainfuel-dialog-container [class*="text-default"] {
+  color: var(--drac-fg);
 }

@@ -5,7 +5,6 @@ import {
   FieldError,
   Form,
   Input,
-  Label,
   ListBox,
   Select,
   TextField
@@ -14,6 +13,7 @@ import { type Food, type MealEntry, type MealType, UpdateMealEntrySchema } from 
 import { type ComponentProps, useState } from "react"
 import { ZodError } from "zod"
 import { useUpdateMealEntry } from "../../queries/mealEntryQueries"
+import { ThemedLabel } from "../layout/ThemedCard"
 
 type EditMealEntryDialogProps = {
   mealEntry: MealEntry
@@ -112,9 +112,9 @@ export const EditMealEntryDialog = ({
 
   return (
     <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialog.Backdrop>
-        <AlertDialog.Container>
-          <AlertDialog.Dialog>
+      <AlertDialog.Backdrop className="trainfuel-dialog-backdrop">
+        <AlertDialog.Container className="trainfuel-dialog-container">
+          <AlertDialog.Dialog className="trainfuel-dialog">
             <AlertDialog.Header>
               <AlertDialog.Heading>Edit meal entry</AlertDialog.Heading>
             </AlertDialog.Header>
@@ -127,14 +127,14 @@ export const EditMealEntryDialog = ({
                   name="foodId"
                   placeholder="Choose food"
                 >
-                  <Label>Food</Label>
+                  <ThemedLabel>Food</ThemedLabel>
 
-                  <Select.Trigger>
+                  <Select.Trigger className="trainfuel-select-trigger">
                     <Select.Value />
                     <Select.Indicator />
                   </Select.Trigger>
 
-                  <Select.Popover>
+                  <Select.Popover className="trainfuel-select-popover">
                     <ListBox>
                       {foods.map((food) => (
                         <ListBox.Item id={food.id} key={food.id} textValue={food.name}>
@@ -154,9 +154,9 @@ export const EditMealEntryDialog = ({
                   name="mealType"
                   placeholder="Choose meal"
                 >
-                  <Label>Meal</Label>
+                  <ThemedLabel>Meal</ThemedLabel>
 
-                  <Select.Trigger>
+                  <Select.Trigger className="trainfuel-select-trigger">
                     <Select.Value />
                     <Select.Indicator />
                   </Select.Trigger>
@@ -180,8 +180,8 @@ export const EditMealEntryDialog = ({
                   defaultValue={String(mealEntry.quantityGrams)}
                   name="quantityGrams"
                 >
-                  <Label>Quantity in grams</Label>
-                  <Input placeholder="200" type="number" />
+                  <ThemedLabel>Quantity in grams</ThemedLabel>
+                  <Input className="trainfuel-input" placeholder="200" type="number" />
                   <FieldError />
                 </TextField>
 
@@ -207,6 +207,7 @@ export const EditMealEntryDialog = ({
 
                 <AlertDialog.Footer>
                   <Button
+                    className="trainfuel-secondary-button"
                     isDisabled={updateMealEntryMutation.isPending}
                     onPress={() => {
                       onOpenChange(false)

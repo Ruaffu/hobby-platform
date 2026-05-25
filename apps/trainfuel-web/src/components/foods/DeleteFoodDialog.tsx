@@ -1,9 +1,7 @@
 import { AlertDialog, Button, Card } from "@heroui/react"
 import type { Food } from "@hobby/contracts"
 import { useDeleteFood } from "../../queries/foodQueries"
-import {
-  ThemedCardDescription
-} from "../layout/ThemedCard"
+import { ThemedCardDescription } from "../layout/ThemedCard"
 
 type DeleteFoodDialogProps = {
   food: Food
@@ -24,9 +22,9 @@ export const DeleteFoodDialog = ({ food, isOpen, onOpenChange }: DeleteFoodDialo
 
   return (
     <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialog.Backdrop>
-        <AlertDialog.Container>
-          <AlertDialog.Dialog>
+      <AlertDialog.Backdrop className="trainfuel-dialog-backdrop">
+        <AlertDialog.Container className="trainfuel-dialog-container">
+          <AlertDialog.Dialog className="trainfuel-dialog">
             <AlertDialog.Header>
               <AlertDialog.Heading>Delete food?</AlertDialog.Heading>
             </AlertDialog.Header>
@@ -48,7 +46,11 @@ export const DeleteFoodDialog = ({ food, isOpen, onOpenChange }: DeleteFoodDialo
             </AlertDialog.Body>
 
             <AlertDialog.Footer>
-              <Button isDisabled={deleteFoodMutation.isPending} onPress={() => onOpenChange(false)}>
+              <Button
+                className="trainfuel-secondary-button"
+                isDisabled={deleteFoodMutation.isPending}
+                onPress={() => onOpenChange(false)}
+              >
                 Cancel
               </Button>
 

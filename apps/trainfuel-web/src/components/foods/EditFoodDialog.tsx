@@ -55,9 +55,9 @@ export const EditFoodDialog = ({ food, isOpen, onOpenChange }: EditFoodDialogPro
 
   return (
     <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialog.Backdrop>
-        <AlertDialog.Container>
-          <AlertDialog.Dialog>
+      <AlertDialog.Backdrop className="trainfuel-dialog-backdrop">
+        <AlertDialog.Container className="trainfuel-dialog-container">
+          <AlertDialog.Dialog className="trainfuel-dialog">
             <AlertDialog.Header>
               <AlertDialog.Heading>Edit food</AlertDialog.Heading>
             </AlertDialog.Header>
@@ -143,6 +143,7 @@ export const EditFoodDialog = ({ food, isOpen, onOpenChange }: EditFoodDialogPro
 
                 <AlertDialog.Footer>
                   <Button
+                    className="trainfuel-secondary-button"
                     isDisabled={updateFoodMutation.isPending}
                     onPress={() => onOpenChange(false)}
                   >
