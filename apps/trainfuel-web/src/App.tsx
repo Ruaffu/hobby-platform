@@ -2,6 +2,7 @@ import { Tabs } from "@heroui/react"
 import { useState } from "react"
 import { CreateFoodForm } from "./components/foods/CreateFoodForm"
 import { FoodTable } from "./components/foods/FoodTable"
+import { DailyGoalForm } from "./components/goals/DailyGoalForm"
 import { DashboardGrid, Page, PageHeader, SectionCard, Stack } from "./components/layout/Page"
 import { StatusText } from "./components/layout/StatusText"
 import { CreateMealEntryForm } from "./components/meals/CreateMealEntryForm"
@@ -11,14 +12,16 @@ import { SelectedDateField } from "./components/meals/SelectedDateField"
 import { WeeklyCaloriesChart } from "./components/meals/WeeklyCaloriesChart"
 import { filterMealEntriesForDate } from "./features/dates/dateFilters"
 import { useFoods } from "./queries/foodQueries"
+import { useDailyGoal } from "./queries/goalQueries"
 import { useMealEntries } from "./queries/mealEntryQueries"
 
 function App() {
   const foodsQuery = useFoods()
   const mealEntriesQuery = useMealEntries()
+  const dailyGoalQuery = useDailyGoal()
 
   const [selectedDate, setSelectedDate] = useState(() => new Date())
-  const [selectedTab, setSelectedTab] = useState<"today" | "foods">("today")
+  const [selectedTab, setSelectedTab] = useState<"today" | "foods" | "goals">("today")
 
   const selectedDateMealEntries = mealEntriesQuery.isSuccess
     ? filterMealEntriesForDate(mealEntriesQuery.data, selectedDate)
@@ -36,7 +39,7 @@ function App() {
       <Tabs
         selectedKey={selectedTab}
         onSelectionChange={(key) => {
-          setSelectedTab(key as "today" | "foods")
+          setSelectedTab(key as "today" | "foods" | "goals")
         }}
       >
         <Tabs.ListContainer>
@@ -50,6 +53,11 @@ function App() {
               <Tabs.Indicator />
               Foods
             </Tabs.Tab>
+
+            <Tabs.Tab id="goals">
+              <Tabs.Indicator />
+              Goals
+            </Tabs.Tab>
           </Tabs.List>
         </Tabs.ListContainer>
 
@@ -57,7 +65,10 @@ function App() {
           <Stack>
             <DashboardGrid>
               {mealEntriesQuery.isSuccess ? (
-                <DailyTotalsCard mealEntries={selectedDateMealEntries} />
+                <DailyTotalsCard
+                  dailyGoal={dailyGoalQuery.data ?? null}
+                  mealEntries={selectedDateMealEntries}
+                />
               ) : null}
 
               {mealEntriesQuery.isSuccess ? (
@@ -99,6 +110,18 @@ function App() {
 
               {foodsQuery.isSuccess ? <FoodTable foods={foodsQuery.data} /> : null}
             </SectionCard>
+          </Stack>
+        </Tabs.Panel>
+
+        <Tabs.Panel id="goals">
+          <Stack>
+            {dailyGoalQuery.isLoading ? <StatusText>Loading goals...</StatusText> : null}
+
+            {dailyGoalQuery.isError ? (
+              <StatusText tone="danger">Could not load goals.</StatusText>
+            ) : null}
+
+            {dailyGoalQuery.isSuccess ? <DailyGoalForm dailyGoal={dailyGoalQuery.data} /> : null}
           </Stack>
         </Tabs.Panel>
       </Tabs>
