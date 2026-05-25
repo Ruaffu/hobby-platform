@@ -28,7 +28,7 @@ const ProgressBar = ({ value }: ProgressBarProps) => {
   return (
     <Card.Content className="h-2 overflow-hidden rounded-full bg-default-100 p-0">
       <Card.Content
-        className="h-full rounded-full bg-blue-600 p-0"
+        className="trainfuel-progress-bar h-full rounded-full bg-blue-600 p-0"
         style={{
           width: `${value}%`
         }}

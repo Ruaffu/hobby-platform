@@ -1,6 +1,61 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 
+:root {
+  --drac-bg: #282a36;
+  --drac-current-line: #44475a;
+  --drac-fg: #f8f8f2;
+  --drac-comment: #6272a4;
+  --drac-cyan: #8be9fd;
+  --drac-green: #50fa7b;
+  --drac-orange: #ffb86c;
+  --drac-pink: #ff79c6;
+  --drac-purple: #bd93f9;
+  --drac-red: #ff5555;
+  --drac-yellow: #f1fa8c;
+}
+
+.light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.dark {
+  background: #020617;
+  color: #e2e8f0;
+}
+
+.dark [class*="bg-default-100"] {
+  background: #1e293b;
+}
+
+.dark [class*="text-default-900"] {
+  color: #e2e8f0;
+}
+
+.dracula {
+  background: var(--drac-bg);
+  color: var(--drac-fg);
+}
+
+.dracula [class*="bg-default-100"] {
+  background: var(--drac-current-line);
+}
+
+.dracula [class*="text-default-900"] {
+  color: var(--drac-fg);
+}
+
+.dracula [class*="text-default-500"] {
+  color: var(--drac-comment);
+}
+
+.dracula .trainfuel-progress-bar {
+  background: var(--drac-purple);
+}
+
+
+
 body {
   margin: 0;
 }

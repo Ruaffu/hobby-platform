@@ -1,5 +1,5 @@
 import { Tabs } from "@heroui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CreateFoodForm } from "./components/foods/CreateFoodForm"
 import { FoodTable } from "./components/foods/FoodTable"
 import { DailyGoalForm } from "./components/goals/DailyGoalForm"
@@ -10,7 +10,9 @@ import { DailyTotalsCard } from "./components/meals/DailyTotalsCard"
 import { MealEntryList } from "./components/meals/MealEntryList"
 import { SelectedDateField } from "./components/meals/SelectedDateField"
 import { WeeklyCaloriesChart } from "./components/meals/WeeklyCaloriesChart"
+import { ThemeSelector } from "./components/theme/ThemeSelector"
 import { filterMealEntriesForDate } from "./features/dates/dateFilters"
+import { type AppTheme, isAppTheme } from "./features/theme/theme"
 import { useFoods } from "./queries/foodQueries"
 import { useDailyGoal } from "./queries/goalQueries"
 import { useMealEntries } from "./queries/mealEntryQueries"
@@ -27,105 +29,124 @@ function App() {
     ? filterMealEntriesForDate(mealEntriesQuery.data, selectedDate)
     : []
 
+  const [theme, setTheme] = useState<AppTheme>(() => {
+    const savedTheme = localStorage.getItem("trainfuel-theme")
+
+    if (savedTheme && isAppTheme(savedTheme)) {
+      return savedTheme
+    }
+
+    return "light"
+  })
+
+  useEffect(() => {
+    localStorage.setItem("trainfuel-theme", theme)
+  }, [theme])
+
   return (
-    <Page>
-      <PageHeader
-        title="TrainFuel"
-        description="Simple food and macro tracking for everyday meals."
-      />
+    <div className={`min-h-screen ${theme}`}>
+      <Page>
+        <PageHeader
+          title="TrainFuel"
+          description="Simple food and macro tracking for everyday meals."
+        />
+        <ThemeSelector theme={theme} onThemeChange={setTheme} />
 
-      <SelectedDateField selectedDate={selectedDate} onSelectedDateChange={setSelectedDate} />
+        <SelectedDateField selectedDate={selectedDate} onSelectedDateChange={setSelectedDate} />
 
-      <Tabs
-        selectedKey={selectedTab}
-        onSelectionChange={(key) => {
-          setSelectedTab(key as "today" | "foods" | "goals")
-        }}
-      >
-        <Tabs.ListContainer>
-          <Tabs.List aria-label="TrainFuel sections">
-            <Tabs.Tab id="today">
-              <Tabs.Indicator />
-              Today
-            </Tabs.Tab>
+        <Tabs
+          selectedKey={selectedTab}
+          onSelectionChange={(key) => {
+            setSelectedTab(key as "today" | "foods" | "goals")
+          }}
+        >
+          <Tabs.ListContainer>
+            <Tabs.List aria-label="TrainFuel sections">
+              <Tabs.Tab id="today">
+                <Tabs.Indicator />
+                Today
+              </Tabs.Tab>
 
-            <Tabs.Tab id="foods">
-              <Tabs.Indicator />
-              Foods
-            </Tabs.Tab>
+              <Tabs.Tab id="foods">
+                <Tabs.Indicator />
+                Foods
+              </Tabs.Tab>
 
-            <Tabs.Tab id="goals">
-              <Tabs.Indicator />
-              Goals
-            </Tabs.Tab>
-          </Tabs.List>
-        </Tabs.ListContainer>
+              <Tabs.Tab id="goals">
+                <Tabs.Indicator />
+                Goals
+              </Tabs.Tab>
+            </Tabs.List>
+          </Tabs.ListContainer>
 
-        <Tabs.Panel id="today">
-          <Stack>
-            <DashboardGrid>
-              {mealEntriesQuery.isSuccess ? (
-                <DailyTotalsCard
-                  dailyGoal={dailyGoalQuery.data ?? null}
-                  mealEntries={selectedDateMealEntries}
-                />
+          <Tabs.Panel id="today">
+            <Stack>
+              <DashboardGrid>
+                {mealEntriesQuery.isSuccess ? (
+                  <DailyTotalsCard
+                    dailyGoal={dailyGoalQuery.data ?? null}
+                    mealEntries={selectedDateMealEntries}
+                  />
+                ) : null}
+
+                {mealEntriesQuery.isSuccess ? (
+                  <WeeklyCaloriesChart mealEntries={mealEntriesQuery.data} />
+                ) : null}
+              </DashboardGrid>
+
+              {foodsQuery.isSuccess ? (
+                <CreateMealEntryForm foods={foodsQuery.data} selectedDate={selectedDate} />
               ) : null}
 
-              {mealEntriesQuery.isSuccess ? (
-                <WeeklyCaloriesChart mealEntries={mealEntriesQuery.data} />
+              <SectionCard
+                title="Selected day meals"
+                description="Meals grouped by breakfast, lunch, dinner, and snack."
+              >
+                {mealEntriesQuery.isLoading ? (
+                  <StatusText>Loading meal entries...</StatusText>
+                ) : null}
+
+                {mealEntriesQuery.isError ? (
+                  <StatusText tone="danger">Could not load meal entries.</StatusText>
+                ) : null}
+
+                {mealEntriesQuery.isSuccess && foodsQuery.isSuccess ? (
+                  <MealEntryList mealEntries={selectedDateMealEntries} foods={foodsQuery.data} />
+                ) : null}
+              </SectionCard>
+            </Stack>
+          </Tabs.Panel>
+
+          <Tabs.Panel id="foods">
+            <Stack>
+              <CreateFoodForm />
+
+              <SectionCard title="Foods" description="Manage your reusable foods.">
+                {foodsQuery.isLoading ? <StatusText>Loading foods...</StatusText> : null}
+
+                {foodsQuery.isError ? (
+                  <StatusText tone="danger">Could not load foods.</StatusText>
+                ) : null}
+
+                {foodsQuery.isSuccess ? <FoodTable foods={foodsQuery.data} /> : null}
+              </SectionCard>
+            </Stack>
+          </Tabs.Panel>
+
+          <Tabs.Panel id="goals">
+            <Stack>
+              {dailyGoalQuery.isLoading ? <StatusText>Loading goals...</StatusText> : null}
+
+              {dailyGoalQuery.isError ? (
+                <StatusText tone="danger">Could not load goals.</StatusText>
               ) : null}
-            </DashboardGrid>
 
-            {foodsQuery.isSuccess ? (
-              <CreateMealEntryForm foods={foodsQuery.data} selectedDate={selectedDate} />
-            ) : null}
-
-            <SectionCard
-              title="Selected day meals"
-              description="Meals grouped by breakfast, lunch, dinner, and snack."
-            >
-              {mealEntriesQuery.isLoading ? <StatusText>Loading meal entries...</StatusText> : null}
-
-              {mealEntriesQuery.isError ? (
-                <StatusText tone="danger">Could not load meal entries.</StatusText>
-              ) : null}
-
-              {mealEntriesQuery.isSuccess && foodsQuery.isSuccess ? (
-                <MealEntryList mealEntries={selectedDateMealEntries} foods={foodsQuery.data} />
-              ) : null}
-            </SectionCard>
-          </Stack>
-        </Tabs.Panel>
-
-        <Tabs.Panel id="foods">
-          <Stack>
-            <CreateFoodForm />
-
-            <SectionCard title="Foods" description="Manage your reusable foods.">
-              {foodsQuery.isLoading ? <StatusText>Loading foods...</StatusText> : null}
-
-              {foodsQuery.isError ? (
-                <StatusText tone="danger">Could not load foods.</StatusText>
-              ) : null}
-
-              {foodsQuery.isSuccess ? <FoodTable foods={foodsQuery.data} /> : null}
-            </SectionCard>
-          </Stack>
-        </Tabs.Panel>
-
-        <Tabs.Panel id="goals">
-          <Stack>
-            {dailyGoalQuery.isLoading ? <StatusText>Loading goals...</StatusText> : null}
-
-            {dailyGoalQuery.isError ? (
-              <StatusText tone="danger">Could not load goals.</StatusText>
-            ) : null}
-
-            {dailyGoalQuery.isSuccess ? <DailyGoalForm dailyGoal={dailyGoalQuery.data} /> : null}
-          </Stack>
-        </Tabs.Panel>
-      </Tabs>
-    </Page>
+              {dailyGoalQuery.isSuccess ? <DailyGoalForm dailyGoal={dailyGoalQuery.data} /> : null}
+            </Stack>
+          </Tabs.Panel>
+        </Tabs>
+      </Page>
+    </div>
   )
 }
 
