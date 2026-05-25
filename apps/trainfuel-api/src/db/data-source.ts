@@ -2,6 +2,7 @@ import "reflect-metadata"
 import "dotenv/config"
 import { DataSource } from "typeorm"
 import { FoodEntity } from "../modules/foods/entities/food.entity.js"
+import { DailyGoalEntity } from "../modules/goals/entities/daily-goal.entity"
 import { MealEntryEntity } from "../modules/meals/entities/meal-entry.entity"
 
 export const AppDataSource = new DataSource({
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DATABASE_USER ?? "trainfuel",
   password: process.env.DATABASE_PASSWORD ?? "trainfuel",
   database: process.env.DATABASE_NAME ?? "trainfuel",
-  entities: [FoodEntity, MealEntryEntity],
+  entities: [FoodEntity, MealEntryEntity, DailyGoalEntity],
   synchronize: false,
   logging: true
 })

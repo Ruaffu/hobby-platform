@@ -1,7 +1,7 @@
-import { foodProcedures, mealProcedures } from "@hobby/contracts"
+import { foodProcedures, goalProcedures, mealProcedures } from "@hobby/contracts"
 import { foodService } from "../modules/foods/services/food.service"
+import { goalService } from "../modules/goals/services/goal.service"
 import { mealService } from "../modules/meals/services/meal.service"
-
 // This file implements the API procedures.
 //
 // The contract says:
@@ -45,6 +45,15 @@ export const router = {
 
     update: mealProcedures.update.handler(async ({ input }) => {
       return mealService.updateMealEntry(input)
+    })
+  },
+  goals: {
+    getDaily: goalProcedures.getDaily.handler(async () => {
+      return goalService.getDailyGoal()
+    }),
+
+    upsertDaily: goalProcedures.upsertDaily.handler(async ({ input }) => {
+      return goalService.upsertDailyGoal(input)
     })
   }
 }

@@ -745,6 +745,140 @@
           }
         }
       }
+    },
+    "/goals/daily": {
+      "get": {
+        "operationId": "goals.getDaily",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "calories": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "protein": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "carbs": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "fat": {
+                          "type": "number",
+                          "minimum": 0
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "calories",
+                        "protein",
+                        "carbs",
+                        "fat"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "goals.upsertDaily",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "calories": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "protein": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "carbs": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "fat": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "calories",
+                  "protein",
+                  "carbs",
+                  "fat"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "calories": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "protein": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "carbs": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "fat": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "calories",
+                    "protein",
+                    "carbs",
+                    "fat"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
