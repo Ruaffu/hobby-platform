@@ -150,7 +150,7 @@ export const EditFoodDialog = ({ food, isOpen, onOpenChange }: EditFoodDialogPro
                   </Button>
 
                   <Button
-                    className="bg-blue-600 text-white hover:bg-blue-700"
+                    className="trainfuel-primary-button"
                     isDisabled={updateFoodMutation.isPending}
                     type="submit"
                   >

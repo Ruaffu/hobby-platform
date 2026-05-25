@@ -50,7 +50,7 @@ export const DeleteFoodDialog = ({ food, isOpen, onOpenChange }: DeleteFoodDialo
               </Button>
 
               <Button
-                className="bg-red-600 text-white hover:bg-red-700"
+                className="trainfuel-danger-button"
                 isDisabled={deleteFoodMutation.isPending}
                 onPress={handleDelete}
               >

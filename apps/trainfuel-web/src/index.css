@@ -54,7 +54,79 @@
   background: var(--drac-purple);
 }
 
+.dracula [class*="bg-content1"],
+.dracula [class*="bg-background"],
+.dracula [class*="bg-default-50"] {
+  background: var(--drac-current-line);
+  color: var(--drac-fg);
+}
 
+.dracula [class*="border-default"] {
+  border-color: var(--drac-comment);
+}
+
+.dracula table {
+  color: var(--drac-fg);
+}
+
+.dracula th {
+  color: var(--drac-purple);
+}
+
+.dracula td {
+  color: var(--drac-fg);
+}
+
+.dracula input,
+.dracula button,
+.dracula [role="button"] {
+  color: inherit;
+}
+
+.dracula input {
+  background: #343746;
+  color: var(--drac-fg);
+}
+
+.dracula input::placeholder {
+  color: var(--drac-comment);
+}
+
+.trainfuel-primary-button {
+  background: #2563eb;
+  color: white;
+}
+
+.trainfuel-primary-button:hover {
+  background: #1d4ed8;
+}
+
+.trainfuel-danger-button {
+  background: #dc2626;
+  color: white;
+}
+
+.trainfuel-danger-button:hover {
+  background: #b91c1c;
+}
+
+.dracula .trainfuel-primary-button {
+  background: var(--drac-purple);
+  color: var(--drac-bg);
+}
+
+.dracula .trainfuel-primary-button:hover {
+  background: var(--drac-pink);
+}
+
+.dracula .trainfuel-danger-button {
+  background: var(--drac-red);
+  color: var(--drac-bg);
+}
+
+.dracula .trainfuel-danger-button:hover {
+  background: var(--drac-orange);
+}
 
 body {
   margin: 0;

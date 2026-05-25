@@ -99,7 +99,7 @@ export const CreateFoodForm = () => {
           </div>
 
           <Button
-            className="bg-blue-600 text-white hover:bg-blue-700"
+            className="trainfuel-primary-button"
             isPending={createFoodMutation.isPending}
             type="submit"
           >

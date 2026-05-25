@@ -98,7 +98,7 @@ export const MealEntryList = ({ mealEntries, foods }: MealEntryListProps) => {
                                   </Button>
 
                                   <Button
-                                    className="bg-red-600 text-white hover:bg-red-700"
+                                    className="trainfuel-danger-button"
                                     isDisabled={deleteMealEntryMutation.isPending}
                                     onPress={() => {
                                       deleteMealEntryMutation.mutate(mealEntry.id)

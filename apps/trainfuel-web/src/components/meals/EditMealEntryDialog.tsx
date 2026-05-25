@@ -216,7 +216,7 @@ export const EditMealEntryDialog = ({
                   </Button>
 
                   <Button
-                    className="bg-blue-600 text-white hover:bg-blue-700"
+                    className="trainfuel-primary-button"
                     isDisabled={updateMealEntryMutation.isPending}
                     type="submit"
                   >

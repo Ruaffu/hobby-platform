@@ -64,7 +64,7 @@ export const FoodTable = ({ foods }: FoodTableProps) => {
                       </Button>
 
                       <Button
-                        className="bg-red-600 text-white hover:bg-red-700"
+                        className="trainfuel-danger-button"
                         onPress={() => {
                           setFoodToDelete(food)
                         }}

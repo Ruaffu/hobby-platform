@@ -158,7 +158,7 @@ export const CreateMealEntryForm = ({ foods, selectedDate }: CreateMealEntryForm
           </TextField>
 
           <Button
-            className="bg-blue-600 text-white hover:bg-blue-700"
+            className="trainfuel-primary-button"
             isDisabled={createMealEntryMutation.isPending || foods.length === 0}
             type="submit"
           >

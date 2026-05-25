@@ -29,10 +29,7 @@ export const FoodCard = ({ food, onDeletePress }: FoodCardProps) => {
           Edit
         </Button>
 
-        <Button
-          className="bg-red-600 text-white hover:bg-red-700"
-          onPress={() => onDeletePress(food)}
-        >
+        <Button className="trainfuel-danger-button" onPress={() => onDeletePress(food)}>
           Delete
         </Button>
 
