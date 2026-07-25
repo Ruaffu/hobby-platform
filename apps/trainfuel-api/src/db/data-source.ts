@@ -4,6 +4,7 @@ import { DataSource } from "typeorm"
 import { FoodEntity } from "../modules/foods/entities/food.entity.js"
 import { DailyGoalEntity } from "../modules/goals/entities/daily-goal.entity"
 import { MealEntryEntity } from "../modules/meals/entities/meal-entry.entity"
+import { WeightEntryEntity } from "../modules/weight/entities/weight-entry.entity"
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DATABASE_USER ?? "trainfuel",
   password: process.env.DATABASE_PASSWORD ?? "trainfuel",
   database: process.env.DATABASE_NAME ?? "trainfuel",
-  entities: [FoodEntity, MealEntryEntity, DailyGoalEntity],
+  entities: [FoodEntity, MealEntryEntity, DailyGoalEntity, WeightEntryEntity],
   synchronize: false,
   logging: true
 })
