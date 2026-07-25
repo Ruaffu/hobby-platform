@@ -1,4 +1,4 @@
-import { foodProcedures, goalProcedures, mealProcedures } from "@hobby/contracts"
+import { foodProcedures, goalProcedures, mealProcedures, weightProcedures } from "@hobby/contracts"
 import { foodService } from "../modules/foods/services/food.service"
 import { goalService } from "../modules/goals/services/goal.service"
 import { mealService } from "../modules/meals/services/meal.service"
@@ -55,5 +55,20 @@ export const router = {
     upsertDaily: goalProcedures.upsertDaily.handler(async ({ input }) => {
       return goalService.upsertDailyGoal(input)
     })
+  },
+
+  weight: {
+    list: weightProcedures.list.handler(() => []),
+    create: weightProcedures.create.handler(({ input }) => ({
+      id: crypto.randomUUID(),
+      weightKg: input.weightKg,
+      loggedAt: input.loggedAt ?? new Date().toISOString()
+    })),
+    update: weightProcedures.update.handler(({ input }) => ({
+      id: input.id,
+      weightKg: input.weightKg ?? 0,
+      loggedAt: input.loggedAt ?? new Date().toISOString()
+    })),
+    delete: weightProcedures.delete.handler(({ input }) => input)
   }
 }
